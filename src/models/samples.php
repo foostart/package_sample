@@ -9,7 +9,7 @@ class Samples extends Model {
     protected $table = 'samples';
     public $timestamps = false;
     protected $fillable = [
-        'sample_title'
+        'sample_name'
     ];
     protected $primaryKey = 'sample_id';
 
@@ -36,7 +36,7 @@ class Samples extends Model {
 
         if (!empty($sample)) {
 
-            $sample->sample_title = $input['sample_title'];
+            $sample->sample_name = $input['sample_name'];
 
             $sample->save();
 
@@ -54,7 +54,7 @@ class Samples extends Model {
     public function add_sample($input) {
 
         $sample = self::create([
-                    'sample_title' => $input['sample_title'],
+                    'sample_name' => $input['sample_name'],
         ]);
         return $sample;
     }

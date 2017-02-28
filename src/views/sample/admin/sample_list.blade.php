@@ -1,7 +1,7 @@
 @extends('laravel-authentication-acl::admin.layouts.base-2cols')
 
 @section('title')
-    Admin area: Groups list
+     Admin area: {{ trans('sample::sample_admin.page_list') }}
 @stop
 
 @section('content')
@@ -12,20 +12,21 @@
             {{-- print messages --}}
             <?php $message = Session::get('message'); ?>
             @if( isset($message) )
-                <div class="alert alert-success">{!! $message !!}</div>
+                <div class="alert alert-success flash-message">{!! $message !!}</div>
             @endif
             {{-- print errors --}}
             @if($errors && ! $errors->isEmpty() )
                 @foreach($errors->all() as $error)
-                    <div class="alert alert-danger">{!! $error !!}</div>
+                    <div class="alert alert-danger flash-message">{!! $error !!}</div>
                 @endforeach
             @endif
+
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h3 class="panel-title bariol-thin"><i class="fa fa-group"></i> {!! $request->all() ? 'Search results:' : 'Groups' !!}</h3>
+                    <h3 class="panel-title bariol-thin"><i class="fa fa-group"></i> {!! $request->all() ? trans('sample::sample_admin.page_search') : trans('sample::sample_admin.page_list') !!}</h3>
                 </div>
                 <div class="panel-body">
-                    @include('laravel-authentication-acl::admin.group.groups-table')
+                    @include('sample::sample.admin.sample_item')
                </div>
            </div>
         </div>

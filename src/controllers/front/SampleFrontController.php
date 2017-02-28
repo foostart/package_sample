@@ -1,6 +1,6 @@
 <?php
 
-namespace Foostart\Sample;
+namespace Foostart\Sample\Controlers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -10,7 +10,7 @@ use URL,
     Redirect;
 use Foostart\Sample\Models\Samples;
 
-class SampleController extends Controller
+class SampleFrontController extends Controller
 {
     public $data = array();
     public function __construct() {

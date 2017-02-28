@@ -1,11 +1,13 @@
 {
-    "name": "foostart/sample",
+    "name": "foostart/package_sample",
     "description": "Create overview sample can intergrate other project",
     "authors": [
         {
-            "name": "Foostart",
+            "name": "fooStart",
             "email": "foostart@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "jacopo/laravel-authentication-acl": "1.3.*"
+    }
 }
