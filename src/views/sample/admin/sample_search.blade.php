@@ -8,8 +8,14 @@
         {!! Form::open(['route' => 'admin_sample','method' => 'get']) !!}
 
         <!--TITLE-->
+        <div class="form-group">
+            {!! Form::label('sample_name','Name:') !!}
+            {!! Form::text('sample_name', null, ['class' => 'form-control', 'placeholder' => trans('sample::sample_admin.sample_name')]) !!}
+        </div>
 
         {!! Form::submit(trans('sample::sample_admin.search').'', ["class" => "btn btn-info pull-right"]) !!}
         {!! Form::close() !!}
     </div>
 </div>
+
+
