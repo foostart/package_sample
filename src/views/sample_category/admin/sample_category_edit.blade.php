@@ -36,13 +36,16 @@ Admin area: {{ trans('sample::sample_admin.page_edit') }}
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-12 col-xs-12">
+                            <!-- SAMPLE CATEGORIES ID -->
                             <h4>{!! trans('sample::sample_admin.form_heading') !!}</h4>
-                            {!! Form::open(['route'=>['admin_sample_category.post', 'id' => @$sample->sample_id],  'files'=>true, 'method' => 'post'])  !!}
+                            {!! Form::open(['route'=>['admin_sample_category.post', 'id' => @$sample->sample_category_id],  'files'=>true, 'method' => 'post'])  !!}
 
+                            <!--END SAMPLE CATEGORIES ID  -->
 
                             <!-- SAMPLE NAME TEXT-->
                             @include('sample::sample_category.elements.text', ['name' => 'sample_category_name'])
                             <!-- /END SAMPLE NAME TEXT -->
+                            
                             {!! Form::hidden('id',@$sample->sample_id) !!}
 
                             <!-- DELETE BUTTON -->
