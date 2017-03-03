@@ -133,27 +133,27 @@ class SampleCategoryAdminController extends Controller {
      */
     public function delete(Request $request) {
 
-        $samples_categories = NULL;
-        $sample_category_id = $request->get('id');
+        $sample = NULL;
+        $sample_id = $request->get('id');
 
-        if (!empty($sample_category_id)) {
-            $samples_categories = $this->obj_sample_category->find($sample_category_id);
+        if (!empty($sample_id)) {
+            $sample = $this->obj_sample->find($sample_id);
 
-            if (!empty($samples_categories)) {
+            if (!empty($sample)) {
                   //Message
-                \Session::flash('message', trans('sample::sample_category_admin.message_delete_successfully'));
+                \Session::flash('message', trans('sample::sample_admin.message_delete_successfully'));
 
-                $samples_categories->delete();
+                $sample->delete();
             }
         } else {
 
         }
 
         $this->data_view = array_merge($this->data_view, array(
-            'samples_categories' => $samples_categories,
+            'sample' => $sample,
         ));
 
-        return Redirect::route("admin_sample_category");
+        return Redirect::route("admin_sample");
     }
 
 }

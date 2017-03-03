@@ -61,13 +61,5 @@ Route::group(['middleware' => ['web']], function () {
             'as' => 'admin_sample_category',
             'uses' => 'Foostart\Sample\Controllers\Admin\SampleCategoryAdminController@index'
         ]);
-
-         /**
-         * delete
-         */
-        Route::get('admin/sample/categories/delete', [
-            'as' => 'admin_sample_category.delete',
-            'uses' => 'Foostart\Sample\Controllers\Admin\SampleCategoryAdminController@delete'
-        ]);
     });
 });

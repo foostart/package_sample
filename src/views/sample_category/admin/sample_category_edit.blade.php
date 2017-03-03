@@ -43,13 +43,11 @@ Admin area: {{ trans('sample::sample_admin.page_edit') }}
                             {!! Form::hidden('id',@$sample->sample_id) !!}
 
                             <!-- DELETE BUTTON -->
-                            <a href="{!! URL::route('admin_sample_category.delete',['id' => @$samples_categories->id, '_token' => csrf_token()]) !!}"
+                            <a href="{!! URL::route('admin_sample.delete',['id' => @$sample->id, '_token' => csrf_token()]) !!}"
                                class="btn btn-danger pull-right margin-left-5 delete">
                                 Delete
                             </a>
                             <!-- DELETE BUTTON -->
-
-                            
 
                             <!-- SAVE BUTTON -->
                             {!! Form::submit('Save', array("class"=>"btn btn-info pull-right ")) !!}
