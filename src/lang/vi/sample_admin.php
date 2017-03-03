@@ -11,22 +11,22 @@ return [
      * Page
      */
 
-    'page_list' => 'Sample page list',
-    'page_add' => 'Sample page add',
-    'page_edit' => 'Sample page edit',
+    'page_list' => 'List of samples',
+    'page_add' => 'Add new item',
+    'page_edit' => 'Update sample item',
     'page_search' => 'Sample page search',
 
-    /**
-     * Menu items & sidebar
-     */
-    "list" => 'Sample list',
-    "add" => 'Add new item',
 
     /**
-     *
+     * Form
      */
     'form_heading' => 'General data',
-    'title' => 'Title',
+    'form_add' => 'Add new sample item',
+    'form_edit' => 'Update sample item',
+    'name' => 'Name',
+    'sample_required_name' => 'Required name',
+    'required' => 'is required',
+    'search' => 'Search',
 
     /**
      * Message
@@ -39,4 +39,14 @@ return [
      * Validator message
      */
     'title_unvalid_length' => 'Unvalid lenght title. Allow from: <b>:TITLE_MIN_LENGTH</b> to <b>:TITLE_MAX_LENGTH</b>.',
+
+    'sample_name' => 'Sample name',
+
+
+    ////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////CATEGORIES///////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
+    'page_category_list' => 'Categories',
+    'sample_category_add_button' => 'Thêm mới'
+
 ];

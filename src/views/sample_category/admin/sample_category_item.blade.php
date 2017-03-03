@@ -1,8 +1,14 @@
+<!--ADD SAMPLE CATEGORY ITEM-->
 <div class="row margin-bottom-12">
     <div class="col-md-12">
-        <a href="{!! URL::route('groups.edit') !!}" class="btn btn-info pull-right"><i class="fa fa-plus"></i> Add New</a>
+        <a href="{!! URL::route('admin_sample_category.edit') !!}" class="btn btn-info pull-right">
+            <i class="fa fa-plus"></i>{{trans('sample::sample_admin.sample_category_add_button')}}
+        </a>
     </div>
 </div>
+<!--/END ADD SAMPLE CATEGORY ITEM-->
+
+
 @if( ! $samples_categories->isEmpty() )
 <table class="table table-hover">
     <thead>
