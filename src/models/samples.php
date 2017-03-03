@@ -13,9 +13,22 @@ class Samples extends Model {
     ];
     protected $primaryKey = 'sample_id';
 
+    /**
+     *
+     * @param type $params
+     * @return type
+     */
     public function get_samples($params = array()) {
-        $sample = self::paginate(10);
-        return $sample;
+        $eloquent = self::orderBy('sample_id');
+
+        //sample_name
+        if (!empty($params['sample_name'])) {
+            $eloquent->where('sample_name', 'like', '%'. $params['sample_name'].'%');
+        }
+
+        $samples = $eloquent->paginate(10);//TODO: change number of item per page to configs
+
+        return $samples;
     }
 
 

@@ -10,7 +10,7 @@
         <!--TITLE-->
         <div class="form-group">
             {!! Form::label('sample_name', trans('sample::sample_admin.sample_name_label')) !!}
-            {!! Form::text('sample_name', null, ['class' => 'form-control', 'placeholder' => trans('sample::sample_admin.sample_name_placeholder')]) !!}
+            {!! Form::text('sample_name', @$params['sample_name'], ['class' => 'form-control', 'placeholder' => trans('sample::sample_admin.sample_name_placeholder')]) !!}
         </div>
         <!--/END TITLE-->
 

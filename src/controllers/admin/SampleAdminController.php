@@ -28,13 +28,14 @@ class SampleAdminController extends Controller {
      */
     public function index(Request $request) {
 
-        $params = array();
+        $params = $request->all();
 
         $list_sample = $this->obj_sample->get_samples($params);
 
         $this->data_view = array_merge($this->data_view, array(
             'samples' => $list_sample,
-            'request' => $request
+            'request' => $request,
+            'params' => $params
         ));
         return view('sample::sample.admin.sample_list', $this->data_view);
     }
