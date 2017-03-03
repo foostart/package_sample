@@ -9,9 +9,10 @@
 
         <!--TITLE-->
         <div class="form-group">
-            {!! Form::label('sample_name','Name:') !!}
-            {!! Form::text('sample_name', null, ['class' => 'form-control', 'placeholder' => trans('sample::sample_admin.sample_name')]) !!}
+            {!! Form::label('sample_name', trans('sample::sample_admin.sample_name_label')) !!}
+            {!! Form::text('sample_name', null, ['class' => 'form-control', 'placeholder' => trans('sample::sample_admin.sample_name_placeholder')]) !!}
         </div>
+        <!--/END TITLE-->
 
         {!! Form::submit(trans('sample::sample_admin.search').'', ["class" => "btn btn-info pull-right"]) !!}
         {!! Form::close() !!}

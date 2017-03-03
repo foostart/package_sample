@@ -27,6 +27,8 @@ return [
     'sample_required_name' => 'Required name',
     'required' => 'is required',
     'search' => 'Search',
+    'sample_name_label' => 'Sample name:',
+    'sample_name_placeholder' => 'sample name',
 
     /**
      * Message
