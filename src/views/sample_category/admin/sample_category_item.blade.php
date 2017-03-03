@@ -8,7 +8,6 @@
 </div>
 <!--/END ADD SAMPLE CATEGORY ITEM-->
 
-
 @if( ! $samples_categories->isEmpty() )
 <table class="table table-hover">
     <thead>
@@ -26,14 +25,30 @@
         ?>
         @foreach($samples_categories as $sample_category)
         <tr>
+            <!--COUNTER-->
             <td>
                 <?php echo $counter; $counter++ ?>
             </td>
-            <td>{!! $sample_category->sample_category_id !!}</td>
-            <td>{!! $sample_category->sample_category_name !!}</td>
+
+            <!--SAMPLE CATEGORY ID-->
             <td>
-                <a href="{!! URL::route('admin_sample_category.edit', ['id' => $sample_category->sample_category_id]) !!}"><i class="fa fa-edit fa-2x"></i></a>
-                <a href="{!! URL::route('admin_sample_category.delete',['id' =>  $sample_category->sample_category_id, '_token' => csrf_token()]) !!}" class="margin-left-5 delete"><i class="fa fa-trash-o fa-2x"></i></a>
+                {!! $sample_category->sample_category_id !!}
+            </td>
+
+            <!--SAMPLE CATEGORY NAME-->
+            <td>
+                {!! $sample_category->sample_category_name !!}
+            </td>
+
+            <!--OPERATOR-->
+            <td>
+                <a href="{!! URL::route('admin_sample_category.edit', ['id' => $sample_category->sample_category_id]) !!}">
+                    <i class="fa fa-edit fa-2x"></i>
+                </a>
+                <a href="{!! URL::route('admin_sample_category.delete',['id' =>  $sample_category->sample_category_id, '_token' => csrf_token()]) !!}"
+                   class="margin-left-5 delete">
+                    <i class="fa fa-trash-o fa-2x"></i>
+                </a>
                 <span class="clearfix"></span>
             </td>
         </tr>
@@ -41,7 +56,7 @@
     </tbody>
 </table>
 @else
-<span class="text-warning"><h5>No results found.</h5></span>
+    <span class="text-warning"><h5>No results found.</h5></span>
 @endif
 <div class="paginator">
     {!! $samples_categories->appends($request->except(['page']) )->render() !!}
