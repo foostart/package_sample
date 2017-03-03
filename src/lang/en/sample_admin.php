@@ -36,6 +36,7 @@ return [
     'message_update_successfully' => 'Update sample item successfully',
     'message_add_successfully' => 'Add new sample item successfully',
     'message_delete_successfully' => 'Delete sample item successfully',
+    'message_find_failed' => 'No results found.',
 
     /**
      * Validator message
@@ -55,5 +56,6 @@ return [
     ////////////////////////////////////////////////////////////////////////////
     'page_category_list' => 'Categories',
     'sample_category_add_button' => 'Add new sample category',
-    
+    'sample_categoty_id' => 'Category ID',
+    'sample_categoty_name' => 'Category name',    
 ];

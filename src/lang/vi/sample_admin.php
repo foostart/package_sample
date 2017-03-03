@@ -34,6 +34,7 @@ return [
     'message_update_successfully' => 'Update sample item successfully',
     'message_add_successfully' => 'Add new sample item successfully',
     'message_delete_successfully' => 'Delete sample item successfully',
+    'message_find_failed' => 'Không có danh mục được tìm thấy.',
 
     /**
      * Validator message
@@ -52,6 +53,8 @@ return [
     ///////////////////////////CATEGORIES///////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////
     'page_category_list' => 'Categories',
-    'sample_category_add_button' => 'Thêm mới'
+    'sample_category_add_button' => 'Thêm mới',
+    'sample_categoty_id' => 'Category ID',
+    'sample_categoty_name' => 'Tên category',
 
 ];

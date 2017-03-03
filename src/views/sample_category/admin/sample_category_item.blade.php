@@ -12,10 +12,21 @@
 <table class="table table-hover">
     <thead>
         <tr>
-            <td style='width:5%'>{{ trans('sample::sample_admin.order') }}</td>
-            <th style='width:10%'>ID</th>
-            <th style='width:50%'>Sample category name</th>
-            <th style='width:20%'>{{ trans('sample::sample_admin.operations') }}</th>
+            <td style='width:5%'>
+                {{ trans('sample::sample_admin.order') }}
+            </td>
+
+            <th style='width:10%'>
+                {{ trans('sample::sample_admin.sample_categoty_id') }}
+            </th>
+
+            <th style='width:50%'>
+                {{ trans('sample::sample_admin.sample_categoty_name') }}
+            </th>
+
+            <th style='width:20%'>
+                {{ trans('sample::sample_admin.operations') }}
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -29,16 +40,19 @@
             <td>
                 <?php echo $counter; $counter++ ?>
             </td>
+            <!--/END COUNTER-->
 
             <!--SAMPLE CATEGORY ID-->
             <td>
                 {!! $sample_category->sample_category_id !!}
             </td>
+            <!--/END SAMPLE CATEGORY ID-->
 
             <!--SAMPLE CATEGORY NAME-->
             <td>
                 {!! $sample_category->sample_category_name !!}
             </td>
+            <!--/END SAMPLE CATEGORY NAME-->
 
             <!--OPERATOR-->
             <td>
@@ -51,12 +65,19 @@
                 </a>
                 <span class="clearfix"></span>
             </td>
+            <!--/END OPERATOR-->
         </tr>
         @endforeach
     </tbody>
 </table>
 @else
-    <span class="text-warning"><h5>No results found.</h5></span>
+    <!-- FIND MESSAGE -->
+    <span class="text-warning">
+        <h5>
+            {{ trans('sample:sample_admin.message_find_failed') }}
+        </h5>
+    </span>
+    <!-- /END FIND MESSAGE -->
 @endif
 <div class="paginator">
     {!! $samples_categories->appends($request->except(['page']) )->render() !!}
