@@ -19,7 +19,7 @@
            </div>
         </div>
         <div class="col-md-4">
-            @include('laravel-authentication-acl::admin.group.search')
+            @include('sample::sample.admin.sample_search')
         </div>
     </div>
 </div>

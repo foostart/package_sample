@@ -30,6 +30,7 @@ class SampleAdminValidator extends AbstractValidator
         $this->errors = $this->errors?$this->errors:new MessageBag();
 
         $flag = $this->isValidTitle($input)?$flag:FALSE;
+
         return $flag;
     }
 
@@ -44,8 +45,8 @@ class SampleAdminValidator extends AbstractValidator
 
         $flag = TRUE;
 
-        $min_lenght = config('sample.name_min_lengh');
-        $max_lenght = config('sample.name_max_lengh');
+        $min_lenght = config('sample_admin.name_min_length');
+        $max_lenght = config('sample_admin.name_max_length');
 
         $sample_name = @$input['sample_name'];
 

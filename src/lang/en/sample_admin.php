@@ -11,17 +11,11 @@ return [
      * Page
      */
 
-    'page_list' => 'Sample page list',
-    'page_add' => 'Sample page add',
-    'page_edit' => 'Sample page edit',
+    'page_list' => 'List of samples',
+    'page_add' => 'Add new item',
+    'page_edit' => 'Update sample item',
     'page_search' => 'Sample page search',
-
-    /**
-     * Menu items & sidebar
-     */
-    'list' => 'List of samples',
-    'add' => 'Add new item',
-    'edit' => 'Update sample item',
+  
 
     /**
      * Form
@@ -32,6 +26,7 @@ return [
     'name' => 'Name',
     'sample_required_name' => 'Required name',
     'required' => 'is required',
+    'search' => 'Search',
 
     /**
      * Message

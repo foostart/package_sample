@@ -65,14 +65,13 @@ class SampleAdminController extends Controller {
      * @return type
      */
     public function post(Request $request) {
-                $this->obj_validator = new SampleAdminValidator();
 
+        $this->obj_validator = new SampleAdminValidator();
 
         $input = $request->all();
 
         $sample_id = (int) $request->get('id');
         $sample = NULL;
-
 
         $data = array();
 
@@ -96,12 +95,12 @@ class SampleAdminController extends Controller {
                     $sample = $this->obj_sample->update_sample($input);
 
                     //Message
-                    \Session::flash('message', trans('sample::sample.message_update_successfully'));
+                    \Session::flash('message', trans('sample::sample_admin.message_update_successfully'));
                     return Redirect::route("admin_sample.edit", ["id" => $sample->sample_id]);
                 } else {
 
                     //Message
-                    \Session::flash('message', trans('sample::sample.message_update_unsuccessfully'));
+                    \Session::flash('message', trans('sample::sample_admin.message_update_unsuccessfully'));
                 }
             } else {
 
@@ -110,12 +109,12 @@ class SampleAdminController extends Controller {
                 if (!empty($sample)) {
 
                     //Message
-                    \Session::flash('message', trans('sample::sample.message_add_successfully'));
+                    \Session::flash('message', trans('sample::sample_admin.message_add_successfully'));
                     return Redirect::route("admin_sample.edit", ["id" => $sample->sample_id]);
                 } else {
 
                     //Message
-                    \Session::flash('message', trans('sample::sample.message_add_unsuccessfully'));
+                    \Session::flash('message', trans('sample::sample_admin.message_add_unsuccessfully'));
                 }
             }
         }
@@ -142,7 +141,7 @@ class SampleAdminController extends Controller {
 
             if (!empty($sample)) {
                   //Message
-                \Session::flash('message', trans('sample::sample.message_delete_successfully'));
+                \Session::flash('message', trans('sample::sample_admin.message_delete_successfully'));
 
                 $sample->delete();
             }

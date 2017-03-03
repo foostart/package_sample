@@ -20,8 +20,9 @@ class SampleServiceProvider extends ServiceProvider {
         /**
          * Publish
          */
-        $this->publishes([
-        ]);
+         $this->publishes([
+            __DIR__.'/config/sample_admin.php' => config_path('sample_admin.php'),
+        ],'config');
 
         $this->loadViewsFrom(__DIR__ . '/views', 'sample');
 
@@ -36,6 +37,11 @@ class SampleServiceProvider extends ServiceProvider {
          * Load view composer
          */
         $this->sampleViewComposer($request);
+
+         $this->publishes([
+                __DIR__.'/../database/migrations/' => database_path('migrations')
+            ], 'migrations');
+
     }
 
     /**
@@ -65,12 +71,12 @@ class SampleServiceProvider extends ServiceProvider {
         view()->composer('sample::sample*', function ($view) {
             global $request;
             $sample_id = $request->get('id');
-            $is_action = empty($sample_id)?'add':'edit';
+            $is_action = empty($sample_id)?'page_add':'page_edit';
 
             $view->with('sidebar_items', [
 
                 //list
-                trans('sample::sample_admin.list') => [
+                trans('sample::sample_admin.page_list') => [
                     'url' => URL::route('admin_sample'),
                     "icon" => '<i class="fa fa-users"></i>'
                 ],

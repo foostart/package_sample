@@ -37,18 +37,10 @@ Admin area: {{ trans('sample::sample_admin.page_edit') }}
                             {!! Form::open(['route'=>['admin_sample.post', 'id' => @$sample->sample_id],  'files'=>true, 'method' => 'post'])  !!}
 
 
-                            <!-- SAMPLE NAME -->
-                            <div class="form-group">
-                                <?php $sample_name = $request->get('sample_titlename')?$request->get('sample_name'):@$sample->sample_name ?>
-                                {!! Form::label('sample_name', trans('sample::sample_admin.name').':') !!}
-                                {!! Form::text('sample_name', $sample_name, ['class' => 'form-control', 'placeholder' => trans('sample::sample_admin.name').'']) !!}
-                            </div>
-                            <!-- /SAMPLE NAME -->
-
-
-
+                            <!-- SAMPLE NAME TEXT-->
+                            @include('sample::sample.elements.text', ['name' => 'sample_name'])
+                            <!-- /END SAMPLE NAME TEXT -->
                             {!! Form::hidden('id',@$sample->sample_id) !!}
-
 
                             <!-- DELETE BUTTON -->
                             <a href="{!! URL::route('admin_sample.delete',['id' => @$sample->id, '_token' => csrf_token()]) !!}"
