@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 use URL;
 use Route,
     Redirect;
-use Foostart\Sample\Models\Samples;
+use Foostart\Sample\Models\SamplesCategories;
 /**
  * Validators
  */
@@ -15,11 +15,11 @@ class SampleCategoryAdminController extends Controller {
 
     public $data_view = array();
 
-    private $obj_sample = NULL;
+    private $obj_sample_category = NULL;
     private $obj_validator = NULL;
 
     public function __construct() {
-        $this->obj_sample = new Samples();
+        $this->obj_sample_category = new SamplesCategories();
     }
 
     /**
@@ -30,13 +30,13 @@ class SampleCategoryAdminController extends Controller {
 
         $params = array();
 
-        $list_sample = $this->obj_sample->get_samples($params);
+        $list_sample_category = $this->obj_sample_category->get_samples_categories($params);
 
         $this->data_view = array_merge($this->data_view, array(
-            'samples' => $list_sample,
+            'samples_categories' => $list_sample_category,
             'request' => $request
         ));
-        return view('sample::sample.admin.sample_list', $this->data_view);
+        return view('sample::sample_category.admin.sample_category_list', $this->data_view);
     }
 
     /**

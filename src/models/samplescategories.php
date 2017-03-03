@@ -13,12 +13,10 @@ class SamplesCategories extends Model {
     ];
     protected $primaryKey = 'sample_category_id';
 
-    public function get_samples($params = array()) {
-        $sample = self::paginate(10);
-        return $sample;
+    public function get_samples_categories($params = array()) {
+        $sample_category = self::paginate(10);
+        return $sample_category;
     }
-
-
 
     /**
      *
