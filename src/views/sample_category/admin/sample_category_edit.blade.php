@@ -46,7 +46,7 @@ Admin area: {{ trans('sample::sample_admin.page_edit') }}
                             @include('sample::sample_category.elements.text', ['name' => 'sample_category_name'])
                             <!-- /END SAMPLE NAME TEXT -->
                             
-                            {!! Form::hidden('id',@$sample->sample_id) !!}
+                            {!! Form::hidden('id',@$sample->sample_category_id) !!}
 
                             <!-- DELETE BUTTON -->
                             <a href="{!! URL::route('admin_sample_category.delete',['id' => @$sample->id, '_token' => csrf_token()]) !!}"
