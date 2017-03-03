@@ -14,15 +14,18 @@ Admin area: {{ trans('sample::sample_admin.page_edit') }}
                         {!! !empty($sample->sample_category_id) ? '<i class="fa fa-pencil"></i>'.trans('sample::sample_admin.form_edit') : '<i class="fa fa-users"></i>'.trans('sample::sample_admin.form_add') !!}
                     </h3>
                 </div>
-
+                <!-- ERRORS NAME  -->
                 {{-- model general errors from the form --}}
                 @if($errors->has('sample_category_name') )
                     <div class="alert alert-danger">{!! $errors->first('sample_category_name') !!}</div>
                 @endif
-
+                <!-- /END ERROR NAME -->
+                
+                <!-- LENGTH NAME  -->
                 @if($errors->has('name_unvalid_length') )
                     <div class="alert alert-danger">{!! $errors->first('name_unvalid_length') !!}</div>
                 @endif
+                <!-- /END LENGTH NAME -->
 
                 {{-- successful message --}}
                 <?php $message = Session::get('message'); ?>
@@ -43,7 +46,7 @@ Admin area: {{ trans('sample::sample_admin.page_edit') }}
                             {!! Form::hidden('id',@$sample->sample_id) !!}
 
                             <!-- DELETE BUTTON -->
-                            <a href="{!! URL::route('admin_sample.delete',['id' => @$sample->id, '_token' => csrf_token()]) !!}"
+                            <a href="{!! URL::route('admin_sample_category.delete',['id' => @$sample->id, '_token' => csrf_token()]) !!}"
                                class="btn btn-danger pull-right margin-left-5 delete">
                                 Delete
                             </a>

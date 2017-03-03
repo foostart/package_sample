@@ -15,7 +15,7 @@ return [
     'page_add' => 'Add new item',
     'page_edit' => 'Update sample item',
     'page_search' => 'Sample page search',
-
+    'page_category'=> 'List categories of sample',
 
     /**
      * Form
@@ -49,6 +49,6 @@ return [
     ///////////////////////////CATEGORIES///////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////
     'page_category_list' => 'Categories',
-    'sample_category_add_button' => 'Add new sample category'
-
+    'sample_category_add_button' => 'Add new sample category',
+    
 ];
