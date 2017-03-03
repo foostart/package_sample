@@ -20,7 +20,7 @@ Admin area: {{ trans('sample::sample_admin.ls') }}
                 @if( isset($message) )
                 <div class="alert alert-success flash-message">{!! $message !!}</div>
                 @endif
-                <!--MESSAGE-->
+                <!--/END MESSAGE-->
 
                 <!--ERRORS-->
                 @if($errors && ! $errors->isEmpty() )
@@ -28,7 +28,7 @@ Admin area: {{ trans('sample::sample_admin.ls') }}
                 <div class="alert alert-danger flash-message">{!! $error !!}</div>
                 @endforeach
                 @endif 
-                <!--ERRORS-->
+                <!--/END ERRORS-->
                 <div class="panel-body">
                     @include('sample::sample_category.admin.sample_category_item')
                 </div>
@@ -42,9 +42,11 @@ Admin area: {{ trans('sample::sample_admin.ls') }}
 @stop
 
 @section('footer_scripts')
+<!-- DELETE CONFIRM -->
 <script>
     $(".delete").click(function () {
-        return confirm("Are you sure to delete this item?");
+        return confirm({{ trans('sample:sample_admin.delete_confirm') }});
     });
 </script>
+<!-- /END DELETE CONFIRM -->
 @stop
