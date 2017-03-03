@@ -13,7 +13,12 @@ Admin area: {{ trans('sample::sample_admin.page_category') }}
             <div class="panel panel-info">
 
                 <div class="panel-heading">
-                    <h3 class="panel-title bariol-thin"><i class="fa fa-group"></i> {!! $request->all() ? trans('sample::sample_admin.page_search') : trans('sample::sample_admin.page_list') !!}</h3>
+                    <h3 class="panel-title bariol-thin">
+                        <i class="fa fa-group"></i> 
+                        {!! $request->all() ? 
+                            trans('sample::sample_admin.page_search') : trans('sample::sample_admin.page_category') 
+                        !!}
+                    </h3>
                 </div>
                 <!--MESSAGE-->
                 <?php $message = Session::get('message'); ?>

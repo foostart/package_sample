@@ -1,7 +1,7 @@
 @extends('laravel-authentication-acl::admin.layouts.base-2cols')
 
 @section('title')
-Admin area: {{ trans('sample::sample_admin.ls') }}
+Admin area: {{ trans('sample::sample_admin.page_list') }}
 @stop
 
 @section('content')
@@ -15,6 +15,7 @@ Admin area: {{ trans('sample::sample_admin.ls') }}
                 <div class="panel-heading">
                     <h3 class="panel-title bariol-thin"><i class="fa fa-group"></i> {!! $request->all() ? trans('sample::sample_admin.page_search') : trans('sample::sample_admin.page_list') !!}</h3>
                 </div>
+                
                 <!--MESSAGE-->
                 <?php $message = Session::get('message'); ?>
                 @if( isset($message) )
