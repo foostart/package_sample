@@ -75,6 +75,9 @@ class SampleServiceProvider extends ServiceProvider {
 
             $view->with('sidebar_items', [
 
+                /**
+                 * Samples
+                 */
                 //list
                 trans('sample::sample_admin.page_list') => [
                     'url' => URL::route('admin_sample'),
@@ -83,6 +86,15 @@ class SampleServiceProvider extends ServiceProvider {
                 //add
                 trans('sample::sample_admin.'.$is_action) => [
                     'url' => URL::route('admin_sample.edit'),
+                    "icon" => '<i class="fa fa-users"></i>'
+                ],
+
+                /**
+                 * Categories
+                 */
+                //list
+                trans('sample::sample_admin.page_category_list') => [
+                    'url' => URL::route('admin_sample_category'),
                     "icon" => '<i class="fa fa-users"></i>'
                 ],
             ]);

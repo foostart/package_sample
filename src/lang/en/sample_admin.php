@@ -15,7 +15,7 @@ return [
     'page_add' => 'Add new item',
     'page_edit' => 'Update sample item',
     'page_search' => 'Sample page search',
-  
+
 
     /**
      * Form
@@ -39,4 +39,10 @@ return [
      * Validator message
      */
     'title_unvalid_length' => 'Unvalid lenght title. Allow from: <b>:TITLE_MIN_LENGTH</b> to <b>:TITLE_MAX_LENGTH</b>.',
+
+
+    ////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////CATEGORIES///////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
+    'page_category_list' => 'Categories',
 ];

@@ -18,6 +18,9 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::group(['middleware' => ['admin_logged', 'can_see']], function () {
 
+        ////////////////////////////////////////////////////////////////////////
+        ////////////////////////////SAMPLES ROUTE///////////////////////////////
+        ////////////////////////////////////////////////////////////////////////
         /**
          * list
          */
@@ -48,6 +51,15 @@ Route::group(['middleware' => ['web']], function () {
         Route::get('admin/sample/delete', [
             'as' => 'admin_sample.delete',
             'uses' => 'Foostart\Sample\Controllers\Admin\SampleAdminController@delete'
+        ]);
+
+
+        ////////////////////////////////////////////////////////////////////////
+        ////////////////////////////SAMPLES ROUTE///////////////////////////////
+        ////////////////////////////////////////////////////////////////////////
+         Route::get('admin/sample/categories', [
+            'as' => 'admin_sample_category',
+            'uses' => 'Foostart\Sample\Controllers\Admin\SampleCategoryAdminController@index'
         ]);
     });
 });
