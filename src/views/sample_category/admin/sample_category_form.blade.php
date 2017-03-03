@@ -19,7 +19,7 @@
            </div>
         </div>
         <div class="col-md-4">
-            @include('sample::sample.admin.sample_search')
+            @include('sample::sample_category.admin.sample_category_search')
         </div>
     </div>
 </div>

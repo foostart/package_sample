@@ -57,9 +57,39 @@ Route::group(['middleware' => ['web']], function () {
         ////////////////////////////////////////////////////////////////////////
         ////////////////////////////SAMPLES ROUTE///////////////////////////////
         ////////////////////////////////////////////////////////////////////////
-         Route::get('admin/sample/categories', [
+
+        ////////////////////////////////////////////////////////////////////////
+        ////////////////////////////CATEGORIES///////////////////////////////
+        ////////////////////////////////////////////////////////////////////////
+         Route::get('admin/sample_category', [
             'as' => 'admin_sample_category',
             'uses' => 'Foostart\Sample\Controllers\Admin\SampleCategoryAdminController@index'
         ]);
+
+        /**
+         * edit-add
+         */
+        Route::get('admin/sample_category/edit', [
+            'as' => 'admin_sample_category.edit',
+            'uses' => 'Foostart\Sample\Controllers\Admin\SampleCategoryAdminController@edit'
+        ]);
+
+        /**
+         * post
+         */
+        Route::post('admin/sample_category/edit', [
+            'as' => 'admin_sample_category.post',
+            'uses' => 'Foostart\Sample\Controllers\Admin\SampleCategoryAdminController@post'
+        ]);
+         /**
+         * delete
+         */
+        Route::get('admin/sample_category/delete', [
+            'as' => 'admin_sample_category.delete',
+            'uses' => 'Foostart\Sample\Controllers\Admin\SampleCategoryAdminController@delete'
+        ]);
+        ////////////////////////////////////////////////////////////////////////
+        ////////////////////////////CATEGORIES///////////////////////////////
+        ////////////////////////////////////////////////////////////////////////
     });
 });

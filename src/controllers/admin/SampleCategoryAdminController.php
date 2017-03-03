@@ -9,7 +9,7 @@ use Foostart\Sample\Models\SamplesCategories;
 /**
  * Validators
  */
-use Foostart\Sample\Validators\SampleAdminValidator;
+use Foostart\Sample\Validators\SampleCategoryAdminValidator;
 
 class SampleCategoryAdminController extends Controller {
 
@@ -47,17 +47,18 @@ class SampleCategoryAdminController extends Controller {
 
         $sample = NULL;
         $sample_id = (int) $request->get('id');
-
+        
 
         if (!empty($sample_id) && (is_int($sample_id))) {
-            $sample = $this->obj_sample->find($sample_id);
+            $sample = $this->obj_sample_category->find($sample_id);
+
         }
 
         $this->data_view = array_merge($this->data_view, array(
             'sample' => $sample,
             'request' => $request
         ));
-        return view('sample::sample.admin.sample_edit', $this->data_view);
+        return view('sample::sample_category.admin.sample_category_edit', $this->data_view);
     }
 
     /**
@@ -66,11 +67,12 @@ class SampleCategoryAdminController extends Controller {
      */
     public function post(Request $request) {
 
-        $this->obj_validator = new SampleAdminValidator();
+        $this->obj_validator = new SampleCategoryAdminValidator();
 
         $input = $request->all();
 
         $sample_id = (int) $request->get('id');
+
         $sample = NULL;
 
         $data = array();
@@ -81,22 +83,22 @@ class SampleCategoryAdminController extends Controller {
 
             if (!empty($sample_id) && is_int($sample_id)) {
 
-                $sample = $this->obj_sample->find($sample_id);
+                $sample = $this->obj_sample_category->find($sample_id);
             }
 
         } else {
             if (!empty($sample_id) && is_int($sample_id)) {
 
-                $sample = $this->obj_sample->find($sample_id);
+                $sample = $this->obj_sample_category->find($sample_id);
 
                 if (!empty($sample)) {
 
-                    $input['sample_id'] = $sample_id;
-                    $sample = $this->obj_sample->update_sample($input);
+                    $input['sample_category_id'] = $sample_id;
+                    $sample = $this->obj_sample_category->update_sample($input);
 
                     //Message
                     \Session::flash('message', trans('sample::sample_admin.message_update_successfully'));
-                    return Redirect::route("admin_sample.edit", ["id" => $sample->sample_id]);
+                    return Redirect::route("admin_sample_category.edit", ["id" => $sample->sample_id]);
                 } else {
 
                     //Message
@@ -104,13 +106,13 @@ class SampleCategoryAdminController extends Controller {
                 }
             } else {
 
-                $sample = $this->obj_sample->add_sample($input);
+                $sample = $this->obj_sample_category->add_sample($input);
 
                 if (!empty($sample)) {
 
                     //Message
                     \Session::flash('message', trans('sample::sample_admin.message_add_successfully'));
-                    return Redirect::route("admin_sample.edit", ["id" => $sample->sample_id]);
+                    return Redirect::route("admin_sample_category.edit", ["id" => $sample->sample_id]);
                 } else {
 
                     //Message
@@ -124,7 +126,7 @@ class SampleCategoryAdminController extends Controller {
             'request' => $request,
         ), $data);
 
-        return view('sample::sample.admin.sample_edit', $this->data_view);
+        return view('sample::sample_category.admin.sample_category_edit', $this->data_view);
     }
 
     /**
@@ -137,7 +139,7 @@ class SampleCategoryAdminController extends Controller {
         $sample_id = $request->get('id');
 
         if (!empty($sample_id)) {
-            $sample = $this->obj_sample->find($sample_id);
+            $sample = $this->obj_sample_category->find($sample_id);
 
             if (!empty($sample)) {
                   //Message
@@ -153,7 +155,7 @@ class SampleCategoryAdminController extends Controller {
             'sample' => $sample,
         ));
 
-        return Redirect::route("admin_sample");
+        return Redirect::route("admin_sample_category");
     }
 
 }
