@@ -9,9 +9,9 @@ class SamplesCategories extends Model {
     protected $table = 'samples_categories';
     public $timestamps = false;
     protected $fillable = [
-        'sample_name'
+        'sample_category_name'
     ];
-    protected $primaryKey = 'sample_id';
+    protected $primaryKey = 'sample_category_id';
 
     public function get_samples($params = array()) {
         $sample = self::paginate(10);
@@ -29,14 +29,14 @@ class SamplesCategories extends Model {
     public function update_sample($input, $sample_id = NULL) {
 
         if (empty($sample_id)) {
-            $sample_id = $input['sample_id'];
+            $sample_id = $input['sample_category_id'];
         }
 
         $sample = self::find($sample_id);
 
         if (!empty($sample)) {
 
-            $sample->sample_name = $input['sample_name'];
+            $sample->sample_category_name = $input['sample_category_name'];
 
             $sample->save();
 
@@ -54,7 +54,7 @@ class SamplesCategories extends Model {
     public function add_sample($input) {
 
         $sample = self::create([
-                    'sample_name' => $input['sample_name'],
+                    'sample_category_name' => $input['sample_category_name'],
         ]);
         return $sample;
     }
