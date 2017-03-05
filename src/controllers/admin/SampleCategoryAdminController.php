@@ -28,13 +28,14 @@ class SampleCategoryAdminController extends Controller {
      */
     public function index(Request $request) {
 
-        $params = array();
+         $params =  $request->all();
 
         $list_sample_category = $this->obj_sample_category->get_samples_categories($params);
 
         $this->data_view = array_merge($this->data_view, array(
             'samples_categories' => $list_sample_category,
-            'request' => $request
+            'request' => $request,
+            'params' => $params
         ));
         return view('sample::sample_category.admin.sample_category_list', $this->data_view);
     }

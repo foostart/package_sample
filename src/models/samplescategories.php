@@ -14,8 +14,13 @@ class SamplesCategories extends Model {
     protected $primaryKey = 'sample_category_id';
 
     public function get_samples_categories($params = array()) {
-        $sample_category = self::paginate(10);
-        return $sample_category;
+        $eloquent = self::orderBy('sample_category_id');
+
+        if (!empty($params['sample_category_name'])) {
+            $eloquent->where('sample_category_name', 'like', '%'. $params['sample_category_name'].'%');
+        }
+        $samples_category = $eloquent->paginate(10);
+        return $samples_category;
     }
 
     /**

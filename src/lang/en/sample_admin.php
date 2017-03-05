@@ -6,7 +6,7 @@ return [
     "package_description" => 'Sample package is for initial',
     "order" => '#',
     "operations" => 'Operations',
-
+    'sample_category_name_label' => 'Sample category name:',
     /**
      * Page
      */
@@ -29,6 +29,7 @@ return [
     'search' => 'Search',
     'sample_name_label' => 'Sample name:',
     'sample_name_placeholder' => 'sample name',
+    'sample_category_name'=> 'Sample category name',
 
     /**
      * Message

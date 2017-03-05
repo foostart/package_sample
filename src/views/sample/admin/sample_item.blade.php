@@ -31,7 +31,11 @@
     </tbody>
 </table>
 @else
-<span class="text-warning"><h5>No results found.</h5></span>
+ <span class="text-warning">
+	<h5>
+		{{ trans('sample::sample_admin.message_find_failed') }}
+	</h5>
+ </span>
 @endif
 <div class="paginator">
     {!! $samples->appends($request->except(['page']) )->render() !!}

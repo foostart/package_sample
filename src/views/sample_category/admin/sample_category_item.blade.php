@@ -74,7 +74,7 @@
     <!-- FIND MESSAGE -->
     <span class="text-warning">
         <h5>
-            {{ trans('sample:sample_admin.message_find_failed') }}
+            {{ trans('sample::sample_admin.message_find_failed') }}
         </h5>
     </span>
     <!-- /END FIND MESSAGE -->
