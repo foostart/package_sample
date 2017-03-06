@@ -1,11 +1,14 @@
-<?php namespace Foostart\Sample\Controllers\Admin;
+<?php
+
+namespace Foostart\Sample\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Foostart\Sample\Controllers\Admin\Controller;
 use URL;
 use Route,
     Redirect;
 use Foostart\Sample\Models\Samples;
+use Foostart\Sample\Models\SamplesCategories;
 /**
  * Validators
  */
@@ -14,8 +17,8 @@ use Foostart\Sample\Validators\SampleAdminValidator;
 class SampleAdminController extends Controller {
 
     public $data_view = array();
-
     private $obj_sample = NULL;
+    private $obj_sample_categories = NULL;
     private $obj_validator = NULL;
 
     public function __construct() {
@@ -54,9 +57,12 @@ class SampleAdminController extends Controller {
             $sample = $this->obj_sample->find($sample_id);
         }
 
+        $this->obj_sample_categories = new SamplesCategories();
+
         $this->data_view = array_merge($this->data_view, array(
             'sample' => $sample,
-            'request' => $request
+            'request' => $request,
+            'categories' => $this->obj_sample_categories->pluckSelect()
         ));
         return view('sample::sample.admin.sample_edit', $this->data_view);
     }
@@ -84,7 +90,6 @@ class SampleAdminController extends Controller {
 
                 $sample = $this->obj_sample->find($sample_id);
             }
-
         } else {
             if (!empty($sample_id) && is_int($sample_id)) {
 
@@ -96,12 +101,12 @@ class SampleAdminController extends Controller {
                     $sample = $this->obj_sample->update_sample($input);
 
                     //Message
-                    \Session::flash('message', trans('sample::sample_admin.message_update_successfully'));
+                    $this->addFlashMessage('message', trans('sample::sample_admin.message_update_successfully'));
                     return Redirect::route("admin_sample.edit", ["id" => $sample->sample_id]);
                 } else {
 
                     //Message
-                    \Session::flash('message', trans('sample::sample_admin.message_update_unsuccessfully'));
+                    $this->addFlashMessage('message', trans('sample::sample_admin.message_update_unsuccessfully'));
                 }
             } else {
 
@@ -110,12 +115,12 @@ class SampleAdminController extends Controller {
                 if (!empty($sample)) {
 
                     //Message
-                    \Session::flash('message', trans('sample::sample_admin.message_add_successfully'));
+                    $this->addFlashMessage('message', trans('sample::sample_admin.message_add_successfully'));
                     return Redirect::route("admin_sample.edit", ["id" => $sample->sample_id]);
                 } else {
 
                     //Message
-                    \Session::flash('message', trans('sample::sample_admin.message_add_unsuccessfully'));
+                    $this->addFlashMessage('message', trans('sample::sample_admin.message_add_unsuccessfully'));
                 }
             }
         }
@@ -123,7 +128,7 @@ class SampleAdminController extends Controller {
         $this->data_view = array_merge($this->data_view, array(
             'sample' => $sample,
             'request' => $request,
-        ), $data);
+                ), $data);
 
         return view('sample::sample.admin.sample_edit', $this->data_view);
     }
@@ -141,8 +146,8 @@ class SampleAdminController extends Controller {
             $sample = $this->obj_sample->find($sample_id);
 
             if (!empty($sample)) {
-                  //Message
-                \Session::flash('message', trans('sample::sample_admin.message_delete_successfully'));
+                //Message
+                $this->addFlashMessage('message', trans('sample::sample_admin.message_delete_successfully'));
 
                 $sample->delete();
             }

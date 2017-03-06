@@ -1,7 +1,7 @@
 <?php namespace Foostart\Sample\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Foostart\Sample\Controllers\Admin\Controller;
 use URL;
 use Route,
     Redirect;
@@ -48,7 +48,7 @@ class SampleCategoryAdminController extends Controller {
 
         $sample = NULL;
         $sample_id = (int) $request->get('id');
-        
+
 
         if (!empty($sample_id) && (is_int($sample_id))) {
             $sample = $this->obj_sample_category->find($sample_id);
@@ -95,29 +95,29 @@ class SampleCategoryAdminController extends Controller {
                 if (!empty($sample)) {
 
                     $input['sample_category_id'] = $sample_id;
-                    $sample = $this->obj_sample_category->update_sample($input);
+                    $sample = $this->obj_sample_category->update_sample_category($input);
 
                     //Message
-                    \Session::flash('message', trans('sample::sample_admin.message_update_successfully'));
+                    $this->addFlashMessage('message', trans('sample::sample_admin.message_update_successfully'));
                     return Redirect::route("admin_sample_category.edit", ["id" => $sample->sample_id]);
                 } else {
 
                     //Message
-                    \Session::flash('message', trans('sample::sample_admin.message_update_unsuccessfully'));
+                    $this->addFlashMessage('message', trans('sample::sample_admin.message_update_unsuccessfully'));
                 }
             } else {
 
-                $sample = $this->obj_sample_category->add_sample($input);
+                $sample = $this->obj_sample_category->add_sample_category($input);
 
                 if (!empty($sample)) {
 
                     //Message
-                    \Session::flash('message', trans('sample::sample_admin.message_add_successfully'));
+                    $this->addFlashMessage('message', trans('sample::sample_admin.message_add_successfully'));
                     return Redirect::route("admin_sample_category.edit", ["id" => $sample->sample_id]);
                 } else {
 
                     //Message
-                    \Session::flash('message', trans('sample::sample_admin.message_add_unsuccessfully'));
+                    $this->addFlashMessage('message', trans('sample::sample_admin.message_add_unsuccessfully'));
                 }
             }
         }
@@ -144,7 +144,7 @@ class SampleCategoryAdminController extends Controller {
 
             if (!empty($sample)) {
                   //Message
-                \Session::flash('message', trans('sample::sample_admin.message_delete_successfully'));
+                $this->addFlashMessage('message', trans('sample::sample_admin.message_delete_successfully'));
 
                 $sample->delete();
             }

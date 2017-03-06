@@ -51,6 +51,12 @@ return [
      */
     'delete_confirm' => 'Are you sure to delete this item?',
 
+    /**
+     *
+     */
+    'tab_overview' => 'Overview',
+    'tab_attributes' => 'Attributes',
+
 
     ////////////////////////////////////////////////////////////////////////////
     ///////////////////////////CATEGORIES///////////////////////////////////////
@@ -58,5 +64,5 @@ return [
     'page_category_list' => 'Categories',
     'sample_category_add_button' => 'Add new sample category',
     'sample_categoty_id' => 'Category ID',
-    'sample_categoty_name' => 'Category name',    
+    'sample_categoty_name' => 'Category name',
 ];

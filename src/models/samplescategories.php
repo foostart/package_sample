@@ -29,7 +29,7 @@ class SamplesCategories extends Model {
      * @param type $sample_id
      * @return type
      */
-    public function update_sample($input, $sample_id = NULL) {
+    public function update_sample_category($input, $sample_id = NULL) {
 
         if (empty($sample_id)) {
             $sample_id = $input['sample_category_id'];
@@ -54,11 +54,29 @@ class SamplesCategories extends Model {
      * @param type $input
      * @return type
      */
-    public function add_sample($input) {
+    public function add_sample_category($input) {
 
         $sample = self::create([
                     'sample_category_name' => $input['sample_category_name'],
         ]);
         return $sample;
     }
+
+    /**
+     * Get list of samples categories
+     * @param type $category_id
+     * @return type
+     */
+     public function pluckSelect($category_id = NULL) {
+        if ($category_id) {
+            $categories = self::where('sample_category_id', '!=', $category_id)
+                    ->orderBy('sample_category_name', 'ASC')
+                ->pluck('sample_category_name', 'sample_category_id');
+        } else {
+            $categories = self::orderBy('sample_category_name', 'ASC')
+                ->pluck('sample_category_name', 'sample_category_id');
+        }
+        return $categories;
+    }
+
 }
