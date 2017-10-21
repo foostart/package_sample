@@ -15,7 +15,6 @@
     "license": "MIT",
     "type": "packge",
     "require": {
-        "laravel/framework": "5.4.*"
     },
     "autoload": {
         "classmap": [
