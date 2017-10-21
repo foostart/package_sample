@@ -7,13 +7,12 @@
     ],
     "authors": [
         {
-            "name": "foostart",
+            "name": "FooStart",
             "email": "foostart.com@gmail.com",
             "homepage": "http://foostart.com"
         }
     ],
     "license": "MIT",
-    "type": "packge",
     "require": {
     },
     "autoload": {
@@ -24,8 +23,5 @@
             "Foostart\\Sample\\": "foostart/sample/"
         }
     },
-    "minimum-stability": "dev",
-    "config": {
-        "preferred-install": "dist"
-    }
+    "minimum-stability": "dev"
 }
