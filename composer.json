@@ -16,9 +16,6 @@
     "require": {
     },
     "autoload": {
-        "classmap": [
-            "database"
-        ],
         "psr-4": {
             "Foostart\\Sample\\": "foostart/sample/"
         }
