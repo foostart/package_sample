@@ -1,5 +1,5 @@
 {
-    "name": "foostart/package_sample",
+    "name": "foostart/package-sample",
     "description": "Create overview sample can intergrate other project",
     "keywords": [
         "foostart",
@@ -17,7 +17,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Foostart\\Sample\\": "foostart/sample/"
+            "Foostart\\Sample\\": "/"
         }
     },
     "minimum-stability": "dev"
