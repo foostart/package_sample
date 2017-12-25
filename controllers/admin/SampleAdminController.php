@@ -1,165 +1,153 @@
-<?php
+<?php namespace Foostart\Sample\Controllers\Admin;
 
-namespace Foostart\Sample\Controllers\Admin;
-
+use Foostart\Category\Library\Controllers\FooController;
 use Illuminate\Http\Request;
-use Foostart\Sample\Controllers\Admin\Controller;
 use URL;
 use Route,
     Redirect;
-use Foostart\Sample\Models\Samples;
-use Foostart\Sample\Models\SamplesCategories;
+use Foostart\Sample\Models\Sample;
 /**
  * Validators
  */
-use Foostart\Sample\Validators\SampleAdminValidator;
+use Foostart\Sample\Validators\SampleValidator;
 
-class SampleAdminController extends Controller {
+class SampleAdminController extends FooController {
 
-    public $data_view = array();
-    private $obj_sample = NULL;
-    private $obj_sample_categories = NULL;
-    private $obj_validator = NULL;
+    public $obj_sample = NULL;
 
     public function __construct() {
-        $this->obj_sample = new Samples();
+
+        $this->obj_sample = new Sample(array('per_page' => 10));
+        $this->obj_validator = new SampleValidator();
     }
 
     /**
-     *
-     * @return type
+     * With Super admin: show list of context key
+     * With another users: show list of samples by context
+     * @return view
+     * @status publish
      */
     public function index(Request $request) {
 
         $params = $request->all();
 
-        $list_sample = $this->obj_sample->get_samples($params);
+        $items = $this->obj_sample->selectItems($params);
 
         $this->data_view = array_merge($this->data_view, array(
-            'samples' => $list_sample,
             'request' => $request,
-            'params' => $params
+            'params' => $params,
+            'items' => $items,
         ));
-        return view('sample::sample.admin.sample_list', $this->data_view);
+
+        return view('package-sample::admin.sample-items',$this->data_view);
+
     }
 
     /**
-     *
-     * @return type
+     * Edit existing sample by id - context
+     * Add new sample by context
+     * @return screen
      */
     public function edit(Request $request) {
 
+        $params = $request->all();
+
+        $items = $this->obj_sample->selectItems($params);
+
         $sample = NULL;
-        $sample_id = (int) $request->get('id');
+        $params['id'] = $request->get('id');
 
-
-        if (!empty($sample_id) && (is_int($sample_id))) {
-            $sample = $this->obj_sample->find($sample_id);
+        if (!empty($params['id'])) {
+            $sample = $this->obj_sample->selectItem($params);
         }
-
-        $this->obj_sample_categories = new SamplesCategories();
 
         $this->data_view = array_merge($this->data_view, array(
             'sample' => $sample,
+            'samples' => $items,
             'request' => $request,
-            'categories' => $this->obj_sample_categories->pluckSelect()
         ));
-        return view('sample::sample.admin.sample_edit', $this->data_view);
+        return view('package-sample::admin.sample-edit', $this->data_view);
     }
 
     /**
-     *
-     * @return type
+     * Processing data from POST method: add new item, edit existing item
+     * @return edit page
      */
     public function post(Request $request) {
 
-        $this->obj_validator = new SampleAdminValidator();
-
         $input = $request->all();
 
-        $sample_id = (int) $request->get('id');
+        $id = (int) $request->get('id');
         $sample = NULL;
 
         $data = array();
 
-        if (!$this->obj_validator->validate($input)) {
+        if ($this->obj_validator->validate($input)) {
 
-            $data['errors'] = $this->obj_validator->getErrors();
+            //Update existing item
+            if (!empty($id) && is_int($id)) {
 
-            if (!empty($sample_id) && is_int($sample_id)) {
-
-                $sample = $this->obj_sample->find($sample_id);
-            }
-        } else {
-            if (!empty($sample_id) && is_int($sample_id)) {
-
-                $sample = $this->obj_sample->find($sample_id);
+                $sample = $this->obj_sample->find($id);
 
                 if (!empty($sample)) {
 
-                    $input['sample_id'] = $sample_id;
-                    $sample = $this->obj_sample->update_sample($input);
+                    $input['id'] = $id;
+                    $sample = $this->obj_sample->updateItem($input);
 
                     //Message
-                    $this->addFlashMessage('message', trans('sample::sample_admin.message_update_successfully'));
-                    return Redirect::route("admin_sample.edit", ["id" => $sample->sample_id]);
-                } else {
-
-                    //Message
-                    $this->addFlashMessage('message', trans('sample::sample_admin.message_update_unsuccessfully'));
+                    return Redirect::route("samples.edit", ["id" => $sample->id
+                                                                ])
+                                    ->withMessage('11');
                 }
+
+            //Add new item
             } else {
 
-                $sample = $this->obj_sample->add_sample($input);
+                $sample = $this->obj_sample->insertItem($input);
 
                 if (!empty($sample)) {
 
                     //Message
-                    $this->addFlashMessage('message', trans('sample::sample_admin.message_add_successfully'));
-                    return Redirect::route("admin_sample.edit", ["id" => $sample->sample_id]);
-                } else {
-
-                    //Message
-                    $this->addFlashMessage('message', trans('sample::sample_admin.message_add_unsuccessfully'));
+                    return Redirect::route("samples.edit", ["id" => $sample->id,
+                                                            ])->withMessage('aa');
                 }
+
             }
+        } else {
+
+            $errors = $this->obj_validator->getErrors();
+            // passing the id incase fails editing an already existing item
+            return Redirect::route("samples.edit", $id ? ["id" => $id]: [])
+                    ->withInput()->withErrors($errors);
         }
 
         $this->data_view = array_merge($this->data_view, array(
             'sample' => $sample,
-            'request' => $request,
+            'request' => $request
                 ), $data);
 
-        return view('sample::sample.admin.sample_edit', $this->data_view);
+        return view('package-sample::admin.sample-edit', $this->data_view);
     }
 
     /**
-     *
+     * Delete sample
      * @return type
      */
     public function delete(Request $request) {
 
         $sample = NULL;
-        $sample_id = $request->get('id');
+        $params = $request->all();
+        $id = $request->get('id');
 
-        if (!empty($sample_id)) {
-            $sample = $this->obj_sample->find($sample_id);
+        if (!empty($id)) {
+            $sample = $this->obj_sample->selectItem($params);
 
             if (!empty($sample)) {
-                //Message
-                $this->addFlashMessage('message', trans('sample::sample_admin.message_delete_successfully'));
-
-                $sample->delete();
+                if ($this->obj_sample->deleteItem($params, $sample)) {
+                    return Redirect::route("samples.list")->withMessage(trans('sample-admin.delete-successful'));
+                }
             }
-        } else {
-
         }
-
-        $this->data_view = array_merge($this->data_view, array(
-            'sample' => $sample,
-        ));
-
-        return Redirect::route("admin_sample");
+        return Redirect::route("samples.list")->withMessage(trans('sample-admin.delete-unsuccessful'));
     }
-
 }

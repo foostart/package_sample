@@ -16,82 +16,50 @@ Route::get('sample', [
  */
 Route::group(['middleware' => ['web']], function () {
 
-    Route::group(['middleware' => ['admin_logged', 'can_see']], function () {
+    Route::group(['middleware' => ['admin_logged', 'can_see', 'in_context']], function () {
 
-        ////////////////////////////////////////////////////////////////////////
-        ////////////////////////////SAMPLES ROUTE///////////////////////////////
-        ////////////////////////////////////////////////////////////////////////
+        /*
+          |-----------------------------------------------------------------------
+          | Manage sample
+          |-----------------------------------------------------------------------
+          | 1. List of samples
+          | 2. Edit sample
+          | 3. Delete sample
+          | 4. Add new sample
+          |
+        */
+
         /**
          * list
          */
-        Route::get('admin/sample', [
-            'as' => 'admin_sample',
+        Route::get('admin/samples/list', [
+            'as' => 'samples.list',
             'uses' => 'Foostart\Sample\Controllers\Admin\SampleAdminController@index'
         ]);
 
         /**
          * edit-add
          */
-        Route::get('admin/sample/edit', [
-            'as' => 'admin_sample.edit',
+        Route::get('admin/samples/edit', [
+            'as' => 'samples.edit',
             'uses' => 'Foostart\Sample\Controllers\Admin\SampleAdminController@edit'
         ]);
 
         /**
          * post
          */
-        Route::post('admin/sample/edit', [
-            'as' => 'admin_sample.post',
+        Route::post('admin/samples/edit', [
+            'as' => 'samples.post',
             'uses' => 'Foostart\Sample\Controllers\Admin\SampleAdminController@post'
         ]);
 
         /**
          * delete
          */
-        Route::get('admin/sample/delete', [
-            'as' => 'admin_sample.delete',
+        Route::get('admin/samples/delete', [
+            'as' => 'samples.delete',
             'uses' => 'Foostart\Sample\Controllers\Admin\SampleAdminController@delete'
         ]);
-        ////////////////////////////////////////////////////////////////////////
-        ////////////////////////////SAMPLES ROUTE///////////////////////////////
-        ////////////////////////////////////////////////////////////////////////
 
-
-
-
-        
-        ////////////////////////////////////////////////////////////////////////
-        ////////////////////////////CATEGORIES///////////////////////////////
-        ////////////////////////////////////////////////////////////////////////
-         Route::get('admin/sample_category', [
-            'as' => 'admin_sample_category',
-            'uses' => 'Foostart\Sample\Controllers\Admin\SampleCategoryAdminController@index'
-        ]);
-
-        /**
-         * edit-add
-         */
-        Route::get('admin/sample_category/edit', [
-            'as' => 'admin_sample_category.edit',
-            'uses' => 'Foostart\Sample\Controllers\Admin\SampleCategoryAdminController@edit'
-        ]);
-
-        /**
-         * post
-         */
-        Route::post('admin/sample_category/edit', [
-            'as' => 'admin_sample_category.post',
-            'uses' => 'Foostart\Sample\Controllers\Admin\SampleCategoryAdminController@post'
-        ]);
-         /**
-         * delete
-         */
-        Route::get('admin/sample_category/delete', [
-            'as' => 'admin_sample_category.delete',
-            'uses' => 'Foostart\Sample\Controllers\Admin\SampleCategoryAdminController@delete'
-        ]);
-        ////////////////////////////////////////////////////////////////////////
-        ////////////////////////////CATEGORIES///////////////////////////////
-        ////////////////////////////////////////////////////////////////////////
     });
 });

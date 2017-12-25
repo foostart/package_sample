@@ -4,10 +4,9 @@ namespace Foostart\Sample;
 
 use Illuminate\Support\ServiceProvider;
 use LaravelAcl\Authentication\Classes\Menu\SentryMenuFactory;
-
-use URL, Route;
+use URL,
+    Route;
 use Illuminate\Http\Request;
-
 
 class SampleServiceProvider extends ServiceProvider {
 
@@ -17,30 +16,24 @@ class SampleServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot(Request $request) {
-        /**
-         * Publish
-         */
-         $this->publishes([
-            __DIR__.'/config/sample_admin.php' => config_path('sample_admin.php'),
-        ],'config');
 
-        $this->loadViewsFrom(__DIR__ . '/views', 'sample');
+        //generate context key
+//        $this->generateContextKey();
 
+        // load view
+        $this->loadViewsFrom(__DIR__ . '/Views', 'package-sample');
 
-        /**
-         * Translations
-         */
-         $this->loadTranslationsFrom(__DIR__.'/lang', 'sample');
+        // include view composers
+        require __DIR__ . "/composers.php";
 
+        // publish config
+        $this->publishConfig();
 
-        /**
-         * Load view composer
-         */
-        $this->sampleViewComposer($request);
+        // publish lang
+        $this->publishLang();
 
-         $this->publishes([
-                __DIR__.'/../database/migrations/' => database_path('migrations')
-            ], 'migrations');
+        // publish views
+        $this->publishViews();
 
     }
 
@@ -51,55 +44,56 @@ class SampleServiceProvider extends ServiceProvider {
      */
     public function register() {
         include __DIR__ . '/routes.php';
-
-        /**
-         * Load controllers
-         */
-        $this->app->make('Foostart\Sample\Controllers\Admin\SampleAdminController');
-
-         /**
-         * Load Views
-         */
-        $this->loadViewsFrom(__DIR__ . '/views', 'sample');
     }
 
     /**
-     *
+     * Public config to system
+     * @source: vendor/foostart/package-sample/config
+     * @destination: config/
      */
-    public function sampleViewComposer(Request $request) {
+    protected function publishConfig() {
+        $this->publishes([
+            __DIR__ . '/config/package-sample.php' => config_path('package-sample.php'),
+                ], 'config');
+    }
 
-        view()->composer('sample::sample*', function ($view) {
-            global $request;
-            $sample_id = $request->get('id');
-            $is_action = empty($sample_id)?'page_add':'page_edit';
+    /**
+     * Public language to system
+     * @source: vendor/foostart/package-sample/lang
+     * @destination: resources/lang
+     */
+    protected function publishLang() {
+        $this->publishes([
+            __DIR__ . '/lang' => base_path('resources/lang'),
+        ]);
+    }
 
-            $view->with('sidebar_items', [
+    /**
+     * Public view to system
+     * @source: vendor/foostart/package-sample/Views
+     * @destination: resources/views/vendor/package-sample
+     */
+    protected function publishViews() {
 
-                /**
-                 * Samples
-                 */
-                //list
-                trans('sample::sample_admin.page_list') => [
-                    'url' => URL::route('admin_sample'),
-                    "icon" => '<i class="fa fa-users"></i>'
-                ],
-                //add
-                trans('sample::sample_admin.'.$is_action) => [
-                    'url' => URL::route('admin_sample.edit'),
-                    "icon" => '<i class="fa fa-users"></i>'
-                ],
+        $this->publishes([
+            __DIR__ . '/Views' => base_path('resources/views/vendor/package-sample'),
+        ]);
+    }
 
-                /**
-                 * Categories
-                 */
-                //list
-                trans('sample::sample_admin.page_category_list') => [
-                    'url' => URL::route('admin_sample_category'),
-                    "icon" => '<i class="fa fa-users"></i>'
-                ],
-            ]);
-            //
-        });
+    /**
+     * Generate context key
+     */
+    private function generateContextKey(){
+        $numbers_context = 10;
+        $index = 0;
+        $context_keys = [];
+        do {
+            $index++;
+            $context_keys[] = $index.substr(md5(time().rand(1,99999)),0,11);
+
+        } while ($index < $numbers_context);
+
+        return $context_keys;
     }
 
 }
