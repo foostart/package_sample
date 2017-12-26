@@ -19,6 +19,16 @@ class SampleAdminController extends FooController {
 
         $this->obj_sample = new Sample(array('per_page' => 10));
         $this->obj_validator = new SampleValidator();
+
+        // set language files
+        $this->plang_admin = 'sample-admin';
+        $this->plang_front = 'sample-front';
+
+        // package name
+        $this->package_name = 'package-sample';
+
+        // root routers
+        $this->root_router = 'samples';
     }
 
     /**
@@ -39,7 +49,7 @@ class SampleAdminController extends FooController {
             'items' => $items,
         ));
 
-        return view('package-sample::admin.sample-items',$this->data_view);
+        return view($this->package_name.'::admin.sample-items',$this->data_view);
 
     }
 
@@ -66,7 +76,7 @@ class SampleAdminController extends FooController {
             'samples' => $items,
             'request' => $request,
         ));
-        return view('package-sample::admin.sample-edit', $this->data_view);
+        return view($this->package_name.'::admin.sample-edit', $this->data_view);
     }
 
     /**
@@ -95,7 +105,7 @@ class SampleAdminController extends FooController {
                     $sample = $this->obj_sample->updateItem($input);
 
                     //Message
-                    return Redirect::route("samples.edit", ["id" => $sample->id
+                    return Redirect::route($this->root_router.'.edit', ["id" => $sample->id
                                                                 ])
                                     ->withMessage('11');
                 }
@@ -108,7 +118,7 @@ class SampleAdminController extends FooController {
                 if (!empty($sample)) {
 
                     //Message
-                    return Redirect::route("samples.edit", ["id" => $sample->id,
+                    return Redirect::route($this->root_router.'.edit', ["id" => $sample->id,
                                                             ])->withMessage('aa');
                 }
 
@@ -117,7 +127,7 @@ class SampleAdminController extends FooController {
 
             $errors = $this->obj_validator->getErrors();
             // passing the id incase fails editing an already existing item
-            return Redirect::route("samples.edit", $id ? ["id" => $id]: [])
+            return Redirect::route($this->root_router.'.edit', $id ? ["id" => $id]: [])
                     ->withInput()->withErrors($errors);
         }
 
@@ -126,7 +136,7 @@ class SampleAdminController extends FooController {
             'request' => $request
                 ), $data);
 
-        return view('package-sample::admin.sample-edit', $this->data_view);
+        return view($this->package_name.'::admin.sample-edit', $this->data_view);
     }
 
     /**
@@ -144,10 +154,10 @@ class SampleAdminController extends FooController {
 
             if (!empty($sample)) {
                 if ($this->obj_sample->deleteItem($params, $sample)) {
-                    return Redirect::route("samples.list")->withMessage(trans('sample-admin.delete-successful'));
+                    return Redirect::route($this->root_router.'.list')->withMessage(trans($this->plang_admin.'.delete-successful'));
                 }
             }
         }
-        return Redirect::route("samples.list")->withMessage(trans('sample-admin.delete-unsuccessful'));
+        return Redirect::route($this->root_router.'.list')->withMessage(trans($this->plang_admin.'.delete-unsuccessful'));
     }
 }

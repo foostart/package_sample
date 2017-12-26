@@ -1,22 +1,36 @@
 
 <div class="panel panel-info">
     <div class="panel-heading">
-        <h3 class="panel-title bariol-thin"><i class="fa fa-search"></i><?php echo trans('sample::sample_admin.page_search') ?></h3>
+        <h3 class="panel-title bariol-thin"><i class="fa fa-search"></i>
+            <?php echo trans($plang_admin.'.labels.title-search') ?>
+        </h3>
     </div>
     <div class="panel-body">
 
         {!! Form::open(['route' => 'samples.list','method' => 'get']) !!}
 
-        <!--TITLE-->
-        <div class="form-group">
-            {!! Form::label('sample_name', trans('sample::sample_admin.sample_name_label')) !!}
-            {!! Form::text('sample_name', @$params['sample_name'], ['class' => 'form-control', 'placeholder' => trans('sample::sample_admin.sample_name_placeholder')]) !!}
-        </div>
-        <!--/END TITLE-->
+            <!--BUTTONS-->
+            <div class="form-group">
+                <a href="{!! URL::route('samples.list', ['context' => @$params['context']]) !!}" class="btn btn-default search-reset">
+                    {!! trans($plang_admin.'.buttons.reset') !!}
+                </a>
+                {!! Form::submit(trans($plang_admin.'.buttons.search').'', ["class" => "btn btn-info", 'id' => 'search-submit']) !!}
+            </div>
 
-        {!! Form::submit(trans('sample::sample_admin.search').'', ["class" => "btn btn-info pull-right"]) !!}
+            <!-- KEYWORD -->
+            @include('package-category::admin.partials.input_text', [
+                'name' => 'keyword',
+                'label' => trans($plang_admin.'.form.keyword'),
+                'value' => @$params['keyword'],
+            ])
+
+
+            @include('package-category::admin.partials.sorting')
+
+            <div class='hidden-field'>
+                {!! Form::hidden('context',@$request->get('context',null)) !!}
+            </div>
+
         {!! Form::close() !!}
     </div>
 </div>
-
-
