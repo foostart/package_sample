@@ -9,4 +9,4 @@
 1. CRUD
 2. Add category to form
 3. Language standard
-4. Add filters on table
+4. Add filters on table data
