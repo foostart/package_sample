@@ -18,7 +18,7 @@
 @extends('laravel-authentication-acl::admin.layouts.base-2cols')
 
 @section('title')
-    {{ trans('title-samples-edit') }}
+    {{ trans($plang_admin.'.pages.title-edit') }}
 @stop
 
 @section('content')
@@ -33,16 +33,16 @@
                     <h3 class="panel-title bariol-thin">
                         {!! !empty($sample->id)
                             ?
-                            '<i class="fa fa-pencil"></i>'.trans($plang_admin.'.form_edit')
+                            '<i class="fa fa-pencil"></i>'.trans($plang_admin.'.pages.title-edit')
                             :
-                            '<i class="fa fa-users"></i>'.trans($plang_admin.'.sample_add')
+                            '<i class="fa fa-users"></i>'.trans($plang_admin.'.pages.title-add')
                         !!}
                     </h3>
                 </div>
 
                 <!--DESCRIPTION-->
                 <div class='panel-description'>
-                    {!! trans($plang_admin.'.sample-form-description') !!}</h4>
+                    {!! trans($plang_admin.'.description.form') !!}</h4>
                 </div>
 
                 <!-- ERRORS NAME  -->

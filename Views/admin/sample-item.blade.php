@@ -10,16 +10,28 @@
 <!--/ADD NEW SAMPLE ITEM-->
 
 @if( ! $items->isEmpty() )
+<?php
+    $withs = [
+        'order' => '5%',
+        'name' => '30%',
+        'updated_at' => '30%',
+        'operations' => '20%',
+    ]
+?>
 <table class="table table-hover">
+
     <thead>
         <tr>
-            <th style='width:5%'>
+
+            <!--ORDER-->
+            <th style='width:{{ $withs['order'] }}'>
                 {{ trans($plang_admin.'.columns.order') }}
             </th>
 
-            <!-- sample name -->
+            <!-- NAME -->
             <?php $name = 'sample_name' ?>
-            <th class="hidden-xs" style='width:65%'>{!! trans($plang_admin.'.columns.name') !!}
+
+            <th class="hidden-xs" style='width:{{ $withs['name'] }}'>{!! trans($plang_admin.'.columns.name') !!}
                 <a href='{!! $sorting["url"][$name] !!}' class='tb-id' data-order='asc'>
                     @if($sorting['items'][$name] == 'asc')
                         <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
@@ -31,52 +43,89 @@
                 </a>
             </th>
 
-            <th style='width:10%'>
+            <!-- NAME -->
+            <?php $name = 'updated_at' ?>
+
+            <th class="hidden-xs" style='width:{{ $withs['updated_at'] }}'>{!! trans($plang_admin.'.columns.updated_at') !!}
+                <a href='{!! $sorting["url"][$name] !!}' class='tb-id' data-order='asc'>
+                    @if($sorting['items'][$name] == 'asc')
+                        <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
+                    @elseif($sorting['items'][$name] == 'desc')
+                        <i class="fa fa-sort-alpha-desc" aria-hidden="true"></i>
+                    @else
+                        <i class="fa fa-sort-desc" aria-hidden="true"></i>
+                    @endif
+                </a>
+            </th>
+
+            <!--OPERATIONS-->
+            <th style='width:{{ $withs['operations'] }}'>
                 {{ trans($plang_admin.'.columns.operations') }}
             </th>
         </tr>
+
     </thead>
+
     <tbody>
         <?php
             global $counter;
             $nav = $items->toArray();
             $counter = ($nav['current_page'] - 1) * $nav['per_page'] + 1;
         ?>
-        @foreach($items as $sample)
-        <tr>
-            <!--COUNTER-->
-            <td> <?php echo $counter; $counter++ ?> </td>
 
-            <!--CATEGORY NAME-->
-            <td> {!! $sample->sample_name !!} </td>
+        @foreach($items as $item)
+            <tr>
+                <!--COUNTER-->
+                <td> <?php echo $counter; $counter++ ?> </td>
 
-            <!--OPERATOR-->
-            <td>
-                <a href="{!! URL::route('samples.edit', ['id' => $sample->sample_id,
-                                                            '_token' => csrf_token()
-                                                           ])
-                        !!}">
-                    <i class="fa fa-edit fa-2x"></i>
-                </a>
-                <a href="{!! URL::route('samples.delete',['id' => $sample->id,
+                <!--NAME-->
+                <td> {!! $item->sample_name !!} </td>
+
+                <!--UPDATED AT-->
+                <td> {!! $item->updated_at !!} </td>
+
+                <!--OPERATOR-->
+                <td>
+                    <!--edit-->
+                    <a href="{!! URL::route('samples.edit', ['id' => $item->sample_id,
+                                                                '_token' => csrf_token()
+                                                               ])
+                            !!}">
+                        <i class="fa fa-edit fa-2x"></i>
+                    </a>
+
+                    <!--delete-->
+                    <a href="{!! URL::route('samples.delete',['id' => $item->id,
+                                                                '_token' => csrf_token(),
+                                                                 ])
+                             !!}"
+                       class="margin-left-5 delete">
+                        <i class="fa fa-trash-o fa-2x"></i>
+                    </a>
+
+                    <!--copy-->
+                    <a href="{!! URL::route('samples.edit',['id' => $item->id,
+                                                            'cid' => $item->id,
                                                             '_token' => csrf_token(),
-                                                             ])
-                         !!}"
-                   class="margin-left-5 delete">
-                    <i class="fa fa-trash-o fa-2x"></i>
-                </a>
-                <span class="clearfix"></span>
-            </td>
-            <!--/END OPERATOR-->
-        </tr>
+                                                            ])
+                             !!}"
+                        class="margin-left-5 delete">
+                        <i class="fa fa-files-o fa-2x" aria-hidden="true"></i>
+                    </a>
+                    <span class="clearfix"></span>
+                </td>
+
+            </tr>
         @endforeach
+
     </tbody>
+
 </table>
 @else
     <!--SEARCH RESULT MESSAGE-->
     <span class="text-warning">
         <h5>
-            {{ trans($plang_admin.'.message-find-failed') }}
+            {{ trans($plang_admin.'.description.not-found') }}
         </h5>
     </span>
     <!--/SEARCH RESULT MESSAGE-->

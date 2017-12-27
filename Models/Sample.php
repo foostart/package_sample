@@ -9,7 +9,7 @@ class Sample extends FooModel {
     protected $table = 'samples';
 
     //update record
-    public $timestamps = false;
+    public $timestamps = TRUE;
 
     //list of field in table
     protected $fillable = [
@@ -24,10 +24,10 @@ class Sample extends FooModel {
     ];
 
 
-    protected $valid_ordering_fields = ['sample_id', 'sample_name'];
+    protected $valid_ordering_fields = ['sample_id', 'sample_name', 'updated_at'];
 
     //Check filter name is valid
-    protected $valid_fields_filter = ['sample_id', 'sample_name'];
+    protected $valid_fields_filter = ['sample_id', 'sample_name', 'updated_at'];
     //primary key
     protected $primaryKey = 'sample_id';
 
@@ -111,12 +111,6 @@ class Sample extends FooModel {
                 {
                     switch($column)
                     {
-                        case 'sample':
-                            if (!empty($value)) {
-                                $elo = $elo->where($this->table . '.id', '=', $value);
-                            }
-                            break;
-
                         case 'sample_name':
                             if (!empty($value)) {
                                 $elo = $elo->where($this->table . '.sample_name', '=', $value);
@@ -126,10 +120,10 @@ class Sample extends FooModel {
                         case 'keyword':
                             if (!empty($value)) {
                                 $elo = $elo->where(function($elo) use ($value) {
-                                    $elo->where($this->profile_table_name . '.id', 'LIKE', "%{$value}%")
-                                    ->orWhere($this->profile_table_name . '.sample_name','LIKE', "%{$value}%");
+                                    $elo->where($this->table . '.sample_name', 'LIKE', "%{$value}%")
+                                    ->orWhere($this->table . '.sample_description','LIKE', "%{$value}%")
+                                    ->orWhere($this->table . '.sample_overview','LIKE', "%{$value}%");
                                 });
-                                $this->isTree = FALSE;
                             }
                             break;
                         default:
@@ -137,9 +131,7 @@ class Sample extends FooModel {
                     }
                 }
             }
-
         }
-
         return $elo;
     }
 

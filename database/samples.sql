@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 03, 2017 at 01:53 AM
+-- Generation Time: Dec 27, 2017 at 09:47 AM
 -- Server version: 5.7.11
 -- PHP Version: 7.0.4
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `dev_laravel_v53`
+-- Database: `tailieuweb`
 --
 
 -- --------------------------------------------------------
@@ -26,25 +26,19 @@ SET time_zone = "+00:00";
 -- Table structure for table `samples`
 --
 
-DROP TABLE IF EXISTS `samples`;
 CREATE TABLE `samples` (
   `sample_id` int(11) NOT NULL,
-  `sample_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `category_id` int(11) NOT NULL,
-  `sample_image` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `status_id` int(11) NOT NULL
+  `user_id` int(11) DEFAULT NULL,
+  `user_full_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `category_id` int(11) DEFAULT NULL,
+  `sample_name` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `sample_overview` varchar(500) CHARACTER SET utf8 DEFAULT NULL,
+  `sample_description` text CHARACTER SET utf8,
+  `sample_slug` varchar(1000) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `sample_image` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `samples`
---
-
-INSERT INTO `samples` (`sample_id`, `sample_name`, `category_id`, `sample_image`, `status_id`) VALUES
-(1, 'Ronaldo 7', 0, '', 0),
-(2, 'Messi', 0, '', 0),
-(3, 'Rooney', 0, '', 0),
-(4, 'Mourinho', 0, '', 0),
-(5, 'Van Persie', 0, '', 0);
 
 --
 -- Indexes for dumped tables
@@ -64,7 +58,7 @@ ALTER TABLE `samples`
 -- AUTO_INCREMENT for table `samples`
 --
 ALTER TABLE `samples`
-  MODIFY `sample_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `sample_id` int(11) NOT NULL AUTO_INCREMENT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

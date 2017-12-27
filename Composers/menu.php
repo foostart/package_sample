@@ -36,11 +36,11 @@ View::composer([
          */
         $view->with('sidebar_items', [
             trans('sample-admin.sidebar.list') => [
-                "url" => URL::route('samples.list', ['context' => @$_GET['context']]),
+                "url" => URL::route('samples.list', []),
                 'icon' => '<i class="fa fa-list-ul" aria-hidden="true"></i>'
             ],
             trans('sample-admin.sidebar.add') => [
-                'url' => URL::route('samples.edit', ['context' => @$_GET['context']]),
+                'url' => URL::route('samples.edit', []),
                 'icon' => '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>'
             ]
         ]);

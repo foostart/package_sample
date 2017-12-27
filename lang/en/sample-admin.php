@@ -2,67 +2,226 @@
 
 return [
 
-    "package_name" => 'Sample',
-    "package_description" => 'Sample package is for initial',
-    "order" => '#',
-    "operations" => 'Operations',
-    'sample_category_name_label' => 'Sample category name:',
-    /**
-     * Page
-     */
-
-    'page_list' => 'List of samples',
-    'page_add' => 'Add new item',
-    'page_edit' => 'Update sample item',
-    'page_search' => 'Sample page search',
-    'page_category'=> 'List categories of sample',
-
-    /**
-     * Form
-     */
-    'form_heading' => 'General data',
-    'form_add' => 'Add new sample item',
-    'form_edit' => 'Update sample item',
-    'name' => 'Name',
-    'sample_required_name' => 'Required name',
-    'required' => 'is required',
-    'search' => 'Search',
-    'sample_name_label' => 'Sample name:',
-    'sample_name_placeholder' => 'sample name',
-    'sample_category_name'=> 'Sample category name',
-
-    /**
-     * Message
-     */
-    'message_update_successfully' => 'Update sample item successfully',
-    'message_add_successfully' => 'Add new sample item successfully',
-    'message_delete_successfully' => 'Delete sample item successfully',
-    'message_find_failed' => 'No results found.',
-
-    /**
-     * Validator message
-     */
-    'title_unvalid_length' => 'Unvalid lenght title. Allow from: <b>:TITLE_MIN_LENGTH</b> to <b>:TITLE_MAX_LENGTH</b>.',
-
-    'sample_name' => 'Sample name',
-
-    /**
-     * Validator message
-     */
-    'delete_confirm' => 'Are you sure to delete this item?',
-
-    /**
-     *
-     */
-    'tab_overview' => 'Overview',
-    'tab_attributes' => 'Attributes',
+    /*
+    |-----------------------------------------------------------------------
+    | MAIN MENU
+    |-----------------------------------------------------------------------
+    | Top menu
+    |
+    */
+    'menus' => [
+        'top-menu' => 'Samples'
+    ],
 
 
-    ////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////CATEGORIES///////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////
-    'page_category_list' => 'Categories',
-    'sample_category_add_button' => 'Add new sample category',
-    'sample_categoty_id' => 'Category ID',
-    'sample_categoty_name' => 'Category name',
+
+
+
+    /*
+    |-----------------------------------------------------------------------
+    | SIDEBAR
+    |-----------------------------------------------------------------------
+    | Left side bar
+    |
+    |
+    |
+    */
+    'sidebar' => [
+        'list' => 'Items',
+        'add' => 'Add new',
+    ],
+
+
+
+
+
+    /*
+    |-----------------------------------------------------------------------
+    | Table column
+    |-----------------------------------------------------------------------
+    | The list of columns in table
+    |
+    */
+    'columns' => [
+        'order' => '#',
+        'name' => 'Sample name',
+        'operations' => 'Operations',
+    ],
+
+
+    /*
+    |-----------------------------------------------------------------------
+    | Pages
+    |-----------------------------------------------------------------------
+    | Pages
+    |
+    */
+    'pages' => [
+        'title-list' => 'List of samples',
+        'title-list-search' => 'Search results',
+        'title-edit' => 'Edit sample',
+        'title-add' => 'Add new sample',
+        'title-delete' => 'Delete sample',
+    ],
+
+
+
+
+
+    /*
+    |-----------------------------------------------------------------------
+    | Button
+    |-----------------------------------------------------------------------
+    | The list of buttons
+    |
+    */
+    'buttons' => [
+        'search' => 'Search',
+        'reset' => 'Resest',
+        'add' => 'Add',
+        'save' => 'Save',
+        'delete' => 'Delete',
+    ],
+
+
+
+
+
+    /*
+    |-----------------------------------------------------------------------
+    | Form
+    |-----------------------------------------------------------------------
+    | The list of elements in form
+    |
+    |
+    */
+    'form' => [
+        'keyword' => 'Keyword',
+        'sorting' => 'Sorting',
+        'no-selected' => 'No selected',
+    ],
+
+
+
+
+
+    /*
+    |-----------------------------------------------------------------------
+    | Description
+    |-----------------------------------------------------------------------
+    | Description
+    |
+    */
+    'description' => [
+        'form' => 'Sample form',
+        'update' => 'Update sample',
+        'name' => '<blockquote class="quote-card">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+              </p>
+            </blockquote>',
+        'not-found' => 'Not found samples',
+        'category' => '<blockquote class="quote-card">
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+              </p>
+            </blockquote>',
+    ],
+
+
+
+    /*
+    |-----------------------------------------------------------------------
+    | Error
+    |-----------------------------------------------------------------------
+    | Show error message
+    |
+    |
+    |
+    */
+    'errors' => [
+        'required' => ':attribute is required',
+        'required_length' => 'Allow from: <b>:minlength</b> to <b>:maxlength</b>. characters',
+    ],
+
+
+
+
+    /*
+    |-----------------------------------------------------------------------
+    | FIELDS
+    |-----------------------------------------------------------------------
+    | Column name in table
+    |
+    |
+    |
+    */
+    'fields' => [
+        'id' => 'Sample ID',
+        'name' => 'Sample name',
+        'description' => 'Description',
+        'overview' => 'Overview',
+        'slug' => 'Slug',
+        'updated_at' => 'Updated at'
+    ],
+
+
+
+
+    /*
+    |-----------------------------------------------------------------------
+    | LABLES
+    |-----------------------------------------------------------------------
+    | The lables of element in form
+    |
+    |
+    |
+    */
+    'labels' => [
+        'name' => 'Sample name',
+        'category' => 'Category name',
+        'title-search' => 'Search sample',
+    ],
+
+
+
+
+
+    /*
+    |-----------------------------------------------------------------------
+    | TABS
+    |-----------------------------------------------------------------------
+    | The name of tab
+    |
+    |
+    |
+      */
+    'tabs' => [
+        'menu_1' => 'Basic',
+        'menu_2' => 'Advance',
+        'menu_3' => 'Other',
+        'menu_4' => 'Other',
+        'menu_5' => 'Other',
+        'menu_6' => 'Other',
+        'menu_7' => 'Other',
+    ],
+
+
+
+
+
+    /*
+    |-----------------------------------------------------------------------
+    | HEADING
+    |-----------------------------------------------------------------------
+    |
+    |
+    |
+    |
+    */
+    'headings' => [
+        'form-search' => 'Search samples',
+        'list' => 'List of samples',
+        'search' => 'Search results',
+    ],
 ];

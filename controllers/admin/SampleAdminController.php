@@ -6,6 +6,8 @@ use URL;
 use Route,
     Redirect;
 use Foostart\Sample\Models\Sample;
+use Foostart\Category\Models\Category;
+
 /**
  * Validators
  */
@@ -14,10 +16,15 @@ use Foostart\Sample\Validators\SampleValidator;
 class SampleAdminController extends FooController {
 
     public $obj_sample = NULL;
+    public $obj_category = NULL;
 
     public function __construct() {
 
+        // models
         $this->obj_sample = new Sample(array('per_page' => 10));
+        $this->obj_category = new Category();
+
+        // validators
         $this->obj_validator = new SampleValidator();
 
         // set language files
@@ -54,26 +61,27 @@ class SampleAdminController extends FooController {
     }
 
     /**
-     * Edit existing sample by id - context
-     * Add new sample by context
+     * Edit existing sample by {id} parameters
+     * Add new sample
      * @return screen
+     * @date 26/12/2017
      */
     public function edit(Request $request) {
 
         $params = $request->all();
 
-        $items = $this->obj_sample->selectItems($params);
-
         $sample = NULL;
-        $params['id'] = $request->get('id');
+        $params['id'] = $request->get('id', NULL);
 
         if (!empty($params['id'])) {
             $sample = $this->obj_sample->selectItem($params);
         }
 
+        $categories = $this->obj_category->pluckSelect($params);
+
         $this->data_view = array_merge($this->data_view, array(
             'sample' => $sample,
-            'samples' => $items,
+            'categories' => $categories,
             'request' => $request,
         ));
         return view($this->package_name.'::admin.sample-edit', $this->data_view);
