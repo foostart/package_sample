@@ -8,3 +8,4 @@
 
 1. CRUD
 2. Add category to form
+3. Language standard
