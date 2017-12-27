@@ -1,8 +1,9 @@
 @webiste: http://foostart.com
 
 @package-name: sample
-
+@author: Kang
 @date: 27/12/2017
+@version: 2.0
 
 @features
 
