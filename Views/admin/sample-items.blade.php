@@ -21,6 +21,12 @@
                         </h3>
                     </div>
 
+                    <!--DESCRIPTION-->
+                    <div class='panel-description'>
+                        {!! trans($plang_admin.'.description.list') !!}</h4>
+                    </div>
+                    <!--/DESCRIPTION-->
+
                     <!--MESSAGE-->
                     <?php $message = Session::get('message'); ?>
                     @if( isset($message) )
@@ -63,7 +69,7 @@
     <!-- DELETE CONFIRM -->
     <script>
         $(".delete").click(function () {
-            return confirm("{!! trans($plang_admin.'.delete-confirm') !!}");
+            return confirm("{!! trans($plang_admin.'.confirms.delete') !!}");
         });
     </script>
     <!-- /END DELETE CONFIRM -->

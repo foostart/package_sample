@@ -1,14 +1,3 @@
-<!--ADD NEW SAMPLE ITEM-->
-<div class="row margin-bottom-12">
-    <div class="col-md-12">
-        <a href="{!! URL::route('samples.edit', []) !!}" class="btn btn-info pull-right">
-            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-            {{trans($plang_admin.'.buttons.add')}}
-        </a>
-    </div>
-</div>
-<!--/ADD NEW SAMPLE ITEM-->
-
 @if( ! $items->isEmpty() )
 <?php
     $withs = [
@@ -16,8 +5,19 @@
         'name' => '30%',
         'updated_at' => '30%',
         'operations' => '20%',
-    ]
+    ];
+
+    global $counter;
+    $nav = $items->toArray();
+    $counter = ($nav['current_page'] - 1) * $nav['per_page'] + 1;
 ?>
+<caption>
+    @if($nav['total'] == 1)
+        {!! trans($plang_admin.'.description.counter', ['number' => $nav['total']]) !!}
+    @else
+        {!! trans($plang_admin.'.description.counters', ['number' => $nav['total']]) !!}
+    @endif
+</caption>
 <table class="table table-hover">
 
     <thead>
@@ -67,12 +67,6 @@
     </thead>
 
     <tbody>
-        <?php
-            global $counter;
-            $nav = $items->toArray();
-            $counter = ($nav['current_page'] - 1) * $nav['per_page'] + 1;
-        ?>
-
         @foreach($items as $item)
             <tr>
                 <!--COUNTER-->
