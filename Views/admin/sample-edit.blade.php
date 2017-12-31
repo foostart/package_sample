@@ -31,7 +31,7 @@
                 <!--TITLE BAR-->
                 <div class="panel-heading">
                     <h3 class="panel-title bariol-thin">
-                        {!! !empty($sample->id)
+                        {!! !empty($item->id)
                             ?
                             '<i class="fa fa-pencil"></i>'.trans($plang_admin.'.pages.title-edit')
                             :

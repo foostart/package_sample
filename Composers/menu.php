@@ -16,8 +16,8 @@ use LaravelAcl\Authentication\Classes\Menu\SentryMenuFactory;
 View::composer([
                 'package-sample::admin.sample-edit',
                 'package-sample::admin.sample-form',
-                'package-sample::admin.sample-item',
                 'package-sample::admin.sample-items',
+                'package-sample::admin.sample-item',
                 'package-sample::admin.sample-search',
     ], function ($view) {
 
@@ -35,14 +35,14 @@ View::composer([
          * $sidebar_items
          */
         $view->with('sidebar_items', [
+            trans('sample-admin.sidebar.add') => [
+                'url' => URL::route('samples.edit', []),
+                'icon' => '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>'
+            ],
             trans('sample-admin.sidebar.list') => [
                 "url" => URL::route('samples.list', []),
                 'icon' => '<i class="fa fa-list-ul" aria-hidden="true"></i>'
             ],
-            trans('sample-admin.sidebar.add') => [
-                'url' => URL::route('samples.edit', []),
-                'icon' => '<i class="fa fa-pencil-square-o" aria-hidden="true"></i>'
-            ]
         ]);
 
         /**

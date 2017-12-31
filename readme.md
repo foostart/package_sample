@@ -11,3 +11,4 @@
 2. Add category to form
 3. Language standard
 4. Add filters on table data
+5. Add token for prevent XSRF

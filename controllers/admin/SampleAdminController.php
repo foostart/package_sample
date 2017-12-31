@@ -13,6 +13,7 @@
 
 use Illuminate\Http\Request;
 use URL, Route, Redirect;
+use Illuminate\Support\Facades\App;
 
 use Foostart\Category\Library\Controllers\FooController;
 use Foostart\Sample\Models\Sample;
@@ -27,8 +28,9 @@ class SampleAdminController extends FooController {
 
     public function __construct() {
 
+        parent::__construct();
         // models
-        $this->obj_item = new Sample(array('per_page' => 10));
+        $this->obj_item = new Sample(array('perPage' => 10));
         $this->obj_category = new Category();
 
         // validators
@@ -52,6 +54,9 @@ class SampleAdminController extends FooController {
                 'edit'  => $this->package_name.'::admin.'.$this->package_base_name.'-edit',
             ]
         ];
+
+        $this->data_view['status'] = $this->obj_item->getPluckStatus();
+
     }
 
     /**
@@ -89,7 +94,13 @@ class SampleAdminController extends FooController {
         $params['id'] = $request->get('id', NULL);
 
         if (!empty($params['id'])) {
-            $item = $this->obj_item->selectItem($params);
+
+            $item = $this->obj_item->selectItem($params, FALSE);
+
+            if (empty($item)) {
+                return Redirect::route($this->root_router.'.list')
+                                ->withMessage(trans($this->plang_admin.'.actions.edit-error'));
+            }
         }
 
         $categories = $this->obj_category->pluckSelect($params);
@@ -112,11 +123,13 @@ class SampleAdminController extends FooController {
 
         $item = NULL;
 
-        $params = $request->all();
+        $params = $params = array_merge($request->all(), $this->getUser());
+
+        $is_valid_request = $this->isValidRequest($request);
 
         $id = (int) $request->get('id');
 
-        if ($this->obj_validator->validate($params)) {// valid data
+        if ($is_valid_request && $this->obj_validator->validate($params)) {// valid data
 
             // update existing item
             if (!empty($id)) {
@@ -130,12 +143,12 @@ class SampleAdminController extends FooController {
 
                     // message
                     return Redirect::route($this->root_router.'.edit', ["id" => $item->id])
-                                    ->withMessage(trans($this->plang_admin.'.edit.ok'));
+                                    ->withMessage(trans($this->plang_admin.'.actions.edit-ok'));
                 } else {
 
                     // message
-                    return Redirect::route($this->root_router.'.edit', ["id" => $item->id])
-                                    ->withMessage(trans($this->plang_admin.'.edit.error'));
+                    return Redirect::route($this->root_router.'.list')
+                                    ->withMessage(trans($this->plang_admin.'.actions.edit-error'));
                 }
 
             // add new item
@@ -147,12 +160,12 @@ class SampleAdminController extends FooController {
 
                     //message
                     return Redirect::route($this->root_router.'.edit', ["id" => $item->id])
-                                    ->withMessage(trans($this->plang_admin.'.add.ok'));
+                                    ->withMessage(trans($this->plang_admin.'.actions.add-ok'));
                 } else {
 
                     //message
                     return Redirect::route($this->root_router.'.edit', ["id" => $item->id])
-                                    ->withMessage(trans($this->plang_admin.'.add.error'));
+                                    ->withMessage(trans($this->plang_admin.'.actions.add-error'));
                 }
 
             }
@@ -175,25 +188,34 @@ class SampleAdminController extends FooController {
     public function delete(Request $request) {
 
         $item = NULL;
-
-        $params = $request->all();
-
+        $flag = TRUE;
+        $params = array_merge($request->all(), $this->getUser());
+        $delete_type = isset($params['del-forever'])?'delete-forever':'delete-trash';
         $id = (int)$request->get('id');
+        $ids = $request->get('ids');
 
-        if (!empty($id)) {
+        $is_valid_request = $this->isValidRequest($request);
 
-            $item = $this->obj_item->selectItem($params);
+        if ($is_valid_request && (!empty($id) || !empty($ids))) {
 
-            if (!empty($item)) {
+            $ids = !empty($id)?[$id]:$ids;
 
-                if ($this->obj_item->deleteItem($params, $item)) {
+            foreach ($ids as $id) {
 
-                    return Redirect::route($this->root_router.'.list')
-                            ->withMessage(trans($this->plang_admin.'.delete.ok'));
+                $params['id'] = $id;
+
+                if (!$this->obj_item->deleteItem($params, $delete_type)) {
+                    $flag = FALSE;
                 }
+            }
+            if ($flag) {
+                return Redirect::route($this->root_router.'.list')
+                                ->withMessage(trans($this->plang_admin.'.actions.delete-ok'));
             }
         }
 
-        return Redirect::route($this->root_router.'.list')->withMessage(trans($this->plang_admin.'.delete.error'));
+        return Redirect::route($this->root_router.'.list')
+                        ->withMessage(trans($this->plang_admin.'.actions.delete-error'));
     }
+
 }

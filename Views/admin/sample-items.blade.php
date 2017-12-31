@@ -22,7 +22,7 @@
                     </div>
 
                     <!--DESCRIPTION-->
-                    <div class='panel-description'>
+                    <div class='panel-info panel-description'>
                         {!! trans($plang_admin.'.description.list') !!}</h4>
                     </div>
                     <!--/DESCRIPTION-->
@@ -30,7 +30,7 @@
                     <!--MESSAGE-->
                     <?php $message = Session::get('message'); ?>
                     @if( isset($message) )
-                        <div class="alert alert-success flash-message">{!! $message !!}</div>
+                        <div class="panel-info alert alert-success flash-message">{!! $message !!}</div>
                     @endif
                     <!--/MESSAGE-->
 
@@ -46,7 +46,13 @@
 
                     <!--BODY-->
                     <div class="panel-body">
-                        @include('package-sample::admin.sample-item')
+                        {!! Form::open(['route'=>['samples.delete', 'id' => @$item->id], 'method' => 'get'])  !!}
+
+                            @include('package-sample::admin.sample-item')
+
+                            {!! csrf_field(); !!}
+
+                        {!! Form::close() !!}
                     </div>
                     <!--/BODY-->
 
