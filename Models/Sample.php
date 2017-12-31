@@ -5,45 +5,87 @@ use Illuminate\Database\Eloquent\Model;
 
 class Sample extends FooModel {
 
-    //table name
-    protected $table = 'samples';
-
-    //update record
-    public $timestamps = TRUE;
-
-    //list of field in table
-    protected $fillable = [
-        'sample_name',
-        'category_id'
-    ];
-
-    //list of field in form
-    protected $fields = [
-        'sample_name' => 'category_name',
-        'category_id' => 'category_id',
-    ];
-
-
-    protected $valid_ordering_fields = ['sample_id', 'sample_name', 'updated_at'];
-
-    //Check filter name is valid
-    protected $valid_fields_filter = ['sample_id', 'sample_name', 'updated_at'];
-    //primary key
-    protected $primaryKey = 'sample_id';
-
-    //the number of items on page
-    protected $perPage = 10;
-
-    //is building category tree
-    protected $isTree = TRUE;
-
-
     /**
      * @table categories
      * @param array $attributes
      */
     public function __construct(array $attributes = array()) {
+        //set configurations
+        $this->setConfigs();
+
         parent::__construct($attributes);
+
+    }
+
+    public function setConfigs() {
+
+        //table name
+        $this->table = 'samples';
+
+        //list of field in table
+        $this->fillable = [
+            'sample_name',
+            'category_id',
+            'user_id',
+            'user_full_name',
+            'user_email',
+            'sample_status',
+        ];
+
+        //list of fields for inserting
+        $this->fields = [
+            'sample_name' => [
+                'name' => 'sample_name',
+                'type' => 'Text',
+            ],
+            'category_id' => [
+                'name' => 'category_id',
+                'type' => 'Int',
+            ],
+            'user_id' => [
+                'name' => 'user_id',
+                'type' => 'Int',
+            ],
+            'user_full_name' => [
+                'name' => 'user_full_name',
+                'type' => 'Text',
+            ],
+            'user_email' => [
+                'name' => 'email',
+                'type' => 'Text',
+            ]
+        ];
+
+        //check valid fields for inserting
+        $this->valid_insert_fields = [
+            'sample_name',
+            'user_id',
+            'category_id',
+            'user_full_name',
+            'updated_at',
+            'sample_status',
+        ];
+
+        //check valid fields for ordering
+        $this->valid_ordering_fields = [
+            'sample_name',
+            'updated_at',
+            $this->field_status,
+        ];
+        //check valid fields for filter
+        $this->valid_filter_fields = [
+            'keyword',
+            'status',
+        ];
+
+        //primary key
+        $this->primaryKey = 'sample_id';
+
+        //the number of items on page
+        $this->perPage = 10;
+
+        //item status
+        $this->field_status = 'sample_status';
 
     }
 
@@ -79,11 +121,25 @@ class Sample extends FooModel {
      */
     public function selectItem($params = array(), $key = NULL) {
 
+
         if (empty($key)) {
             $key = $this->primaryKey;
         }
-        $item = $this->where($this->table.".$key", $params['id'])
-                     ->first();
+       //join to another tables
+        $elo = $this->joinTable();
+
+        //search filters
+        $elo = $this->searchFilters($params, $elo, FALSE);
+
+        //select fields
+        $elo = $this->createSelect($elo);
+
+        //id
+        $elo = $elo->where($this->primaryKey, $params['id']);
+
+        //first item
+        $item = $elo->first();
+
         return $item;
     }
 
@@ -101,9 +157,10 @@ class Sample extends FooModel {
      * @param ARRAY $params list of parameters
      * @return ELOQUENT OBJECT
      */
-    protected function searchFilters(array $params = [], $elo){
+    protected function searchFilters(array $params = [], $elo, $by_status = TRUE){
 
-        if($this->isValidFilters($params))
+        //filter
+        if ($this->isValidFilters($params) && (!empty($params)))
         {
             foreach($params as $column => $value)
             {
@@ -114,7 +171,11 @@ class Sample extends FooModel {
                         case 'sample_name':
                             if (!empty($value)) {
                                 $elo = $elo->where($this->table . '.sample_name', '=', $value);
-                                $this->isTree = FALSE;
+                            }
+                            break;
+                        case 'status':
+                            if (!empty($value)) {
+                                $elo = $elo->where($this->table . '.'.$this->field_status, '=', $value);
                             }
                             break;
                         case 'keyword':
@@ -131,7 +192,12 @@ class Sample extends FooModel {
                     }
                 }
             }
+        } elseif ($by_status) {
+
+            $elo = $elo->where($this->table . '.'.$this->field_status, '=', $this->status['publish']);
+
         }
+
         return $elo;
     }
 
@@ -142,9 +208,9 @@ class Sample extends FooModel {
      */
     public function createSelect($elo) {
 
-        $elo = $elo->select(
-               $this->table . '.*'
-        );
+        $elo = $elo->select($this->table . '.*',
+                            $this->table . '.sample_id as id'
+                );
 
         return $elo;
     }
@@ -171,13 +237,18 @@ class Sample extends FooModel {
         if (empty($id)) {
             $id = $params['id'];
         }
+        $field_status = $this->field_status;
 
         $sample = $this->selectItem($params);
 
         if (!empty($sample)) {
+            $dataFields = $this->getDataFields($params, $this->fields);
 
+            foreach ($dataFields as $key => $value) {
+                $sample->$key = $value;
+            }
 
-            $sample->sample_name = $params['sample_name'];
+            $sample->$field_status = $this->status['publish'];
 
             $sample->save();
 
@@ -195,10 +266,15 @@ class Sample extends FooModel {
      */
     public function insertItem($params = []) {
 
-        $sample = self::create([
-                    'sample_name' => $params['sample_name'],
-        ]);
-        return $sample;
+        $dataFields = $this->getDataFields($params, $this->fields);
+
+        $dataFields[$this->field_status] = $this->status['publish'];
+
+
+        $item = self::create($dataFields);
+
+        $item->id = $item->sample_id;
+        return $item;
     }
 
 
@@ -207,11 +283,22 @@ class Sample extends FooModel {
      * @param ARRAY $input list of parameters
      * @return boolean TRUE incase delete successfully otherwise return FALSE
      */
-    public function deleteItem($input = []) {
-        $sample = $this->selectItem($input);
-        if ($sample) {
-            return $sample->delete();
+    public function deleteItem($input = [], $delete_type) {
+
+        $item = $this->find($input['id']);
+
+        if ($item) {
+            switch ($delete_type) {
+                case 'delete-trash':
+                    return $item->fdelete($item);
+                    break;
+                case 'delete-forever':
+                    return $item->delete();
+                    break;
+            }
+
         }
+
         return FALSE;
     }
 

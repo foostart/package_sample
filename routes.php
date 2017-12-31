@@ -16,7 +16,9 @@ Route::get('sample', [
  */
 Route::group(['middleware' => ['web']], function () {
 
-    Route::group(['middleware' => ['admin_logged', 'can_see', 'in_context']], function () {
+    Route::group(['middleware' => ['admin_logged', 'can_see', 'in_context'],
+                  'namespace' => 'Foostart\Sample\Controllers\Admin',
+        ], function () {
 
         /*
           |-----------------------------------------------------------------------
@@ -34,7 +36,7 @@ Route::group(['middleware' => ['web']], function () {
          */
         Route::get('admin/samples/list', [
             'as' => 'samples.list',
-            'uses' => 'Foostart\Sample\Controllers\Admin\SampleAdminController@index'
+            'uses' => 'SampleAdminController@index'
         ]);
 
         /**
@@ -42,7 +44,7 @@ Route::group(['middleware' => ['web']], function () {
          */
         Route::get('admin/samples/edit', [
             'as' => 'samples.edit',
-            'uses' => 'Foostart\Sample\Controllers\Admin\SampleAdminController@edit'
+            'uses' => 'SampleAdminController@edit'
         ]);
 
         /**
@@ -50,7 +52,7 @@ Route::group(['middleware' => ['web']], function () {
          */
         Route::post('admin/samples/edit', [
             'as' => 'samples.post',
-            'uses' => 'Foostart\Sample\Controllers\Admin\SampleAdminController@post'
+            'uses' => 'SampleAdminController@post'
         ]);
 
         /**
@@ -58,7 +60,15 @@ Route::group(['middleware' => ['web']], function () {
          */
         Route::get('admin/samples/delete', [
             'as' => 'samples.delete',
-            'uses' => 'Foostart\Sample\Controllers\Admin\SampleAdminController@delete'
+            'uses' => 'SampleAdminController@delete'
+        ]);
+
+        /**
+         * trash
+         */
+         Route::get('admin/samples/trash', [
+            'as' => 'samples.trash',
+            'uses' => 'SampleAdminController@trash'
         ]);
 
     });

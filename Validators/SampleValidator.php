@@ -23,7 +23,7 @@ class SampleValidator extends FooValidator
         Event::listen('validating', function($input)
         {
             self::$messages = [
-                'required' => trans('sample-admin.required'),
+                'sample_name.required' => trans('sample-admin.errors.required', ['attribute' => 'sample name']),
             ];
         });
 

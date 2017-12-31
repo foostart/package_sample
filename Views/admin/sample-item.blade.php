@@ -1,27 +1,29 @@
-<!--ADD NEW SAMPLE ITEM-->
-<div class="row margin-bottom-12">
-    <div class="col-md-12">
-        <a href="{!! URL::route('samples.edit', []) !!}" class="btn btn-info pull-right">
-            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-            {{trans($plang_admin.'.buttons.add')}}
-        </a>
-    </div>
-</div>
-<!--/ADD NEW SAMPLE ITEM-->
-
 @if( ! $items->isEmpty() )
 <?php
     $withs = [
         'order' => '5%',
-        'name' => '30%',
-        'updated_at' => '30%',
-        'operations' => '20%',
-    ]
+        'name' => '40%',
+        'updated_at' => '40%',
+        'operations' => '10%',
+        'delete' => '5%',
+    ];
+
+    global $counter;
+    $nav = $items->toArray();
+    $counter = ($nav['current_page'] - 1) * $nav['per_page'] + 1;
 ?>
+<caption>
+    @if($nav['total'] == 1)
+        {!! trans($plang_admin.'.description.counter', ['number' => $nav['total']]) !!}
+    @else
+        {!! trans($plang_admin.'.description.counters', ['number' => $nav['total']]) !!}
+    @endif
+</caption>
+
 <table class="table table-hover">
 
     <thead>
-        <tr>
+        <tr style="height: 50px;">
 
             <!--ORDER-->
             <th style='width:{{ $withs['order'] }}'>
@@ -60,19 +62,27 @@
 
             <!--OPERATIONS-->
             <th style='width:{{ $withs['operations'] }}'>
-                {{ trans($plang_admin.'.columns.operations') }}
+                <span class='lb-delete-all'>
+                    {{ trans($plang_admin.'.columns.operations') }}
+                </span>
+
+                {!! Form::submit(trans($plang_admin.'.buttons.delete'), array("class"=>"btn btn-danger pull-right delete btn-delete-all del-trash", 'name'=>'del-trash')) !!}
+                {!! Form::submit(trans($plang_admin.'.buttons.delete'), array("class"=>"btn btn-warning pull-right delete btn-delete-all del-forever", 'name'=>'del-forever')) !!}
             </th>
+
+            <!--DELETE-->
+            <th style='width:{{ $withs['delete'] }}'>
+                <span class="del-checkbox pull-right">
+                    <input type="checkbox" id="selecctall" />
+                    <label for="del-checkbox"></label>
+                </span>
+            </th>
+
         </tr>
 
     </thead>
 
     <tbody>
-        <?php
-            global $counter;
-            $nav = $items->toArray();
-            $counter = ($nav['current_page'] - 1) * $nav['per_page'] + 1;
-        ?>
-
         @foreach($items as $item)
             <tr>
                 <!--COUNTER-->
@@ -91,28 +101,36 @@
                                                                 '_token' => csrf_token()
                                                                ])
                             !!}">
-                        <i class="fa fa-edit fa-2x"></i>
+                        <i class="fa fa-edit f-tb-icon"></i>
                     </a>
 
                     <!--delete-->
-                    <a href="{!! URL::route('samples.delete',['id' => $item->id,
+                    <a href="{!! URL::route('samples.delete',['id' => $item->sample_id,
                                                                 '_token' => csrf_token(),
                                                                  ])
                              !!}"
                        class="margin-left-5 delete">
-                        <i class="fa fa-trash-o fa-2x"></i>
+                        <i class="fa fa-trash-o f-tb-icon"></i>
                     </a>
 
                     <!--copy-->
-                    <a href="{!! URL::route('samples.edit',['id' => $item->id,
-                                                            'cid' => $item->id,
+                    <a href="{!! URL::route('samples.edit',['id' => $item->sample_id,
+                                                            'cid' => $item->sample_id,
                                                             '_token' => csrf_token(),
                                                             ])
                              !!}"
                         class="margin-left-5 delete">
-                        <i class="fa fa-files-o fa-2x" aria-hidden="true"></i>
+                        <i class="fa fa-files-o f-tb-icon" aria-hidden="true"></i>
                     </a>
-                    <span class="clearfix"></span>
+
+                </td>
+
+                <!--DELETE-->
+                <td>
+                    <span class='box-item pull-right'>
+                        <input type="checkbox" id="<?php echo $item->id ?>" name="ids[]" value="{!! $item->id !!}">
+                        <label for="box-item"></label>
+                    </span>
                 </td>
 
             </tr>
@@ -121,6 +139,7 @@
     </tbody>
 
 </table>
+
 @else
     <!--SEARCH RESULT MESSAGE-->
     <span class="text-warning">
@@ -133,3 +152,66 @@
 <div class="paginator">
     {!! $items->appends($request->except(['page']) )->render() !!}
 </div>
+
+@section('footer_scripts')
+    @parent
+    <script type='text/javascript'>
+        $(document).ready(function () {
+            //hide button delete
+            $('.btn-delete-all').hide();
+
+            $('#selecctall').click(function (event) {
+
+                if (this.checked) {
+                    //checked all checkbox
+                    $('.box-item input').each(function () {
+                        $(this).prop('checked', true);
+                    });
+
+                    //show button delete
+                    $('.btn-delete-all').show();
+
+                } else {
+
+                    //un-checked all checkbox
+                    $('.box-item input').each(function () {
+                        $(this).prop('checked', false);
+                    });
+
+                    //hide button delete
+                    $('.btn-delete-all').hide();
+                }
+
+            });
+
+            //counter checked
+            function counterChecked() {
+                $counter = 0;
+                $('.box-item input').each(function () {
+                    if (this.checked) {
+                        $counter++;
+                    }
+                });
+                return $counter;
+            }
+
+            $('.box-item input').each(function () {
+
+                $(this).click(function(){
+                    if (this.checked) {
+                        //show button delete
+                        $('.btn-delete-all').show();
+                    } else {
+                        $counter = counterChecked();
+                        if ($counter == 0) {
+                            $('.btn-delete-all').hide();
+                        } else {
+                            //show button delete
+                            $('.btn-delete-all').show();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+@stop

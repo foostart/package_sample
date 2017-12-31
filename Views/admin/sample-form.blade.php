@@ -2,15 +2,17 @@
 | List of elements in sample form
 |------------------------------------------------------------------------------->
 
-{!! Form::open(['route'=>['samples.post', 'id' => @$sample->id],  'files'=>true, 'method' => 'post'])  !!}
+{!! Form::open(['route'=>['samples.post', 'id' => @$item->id],  'files'=>true, 'method' => 'post'])  !!}
 
     <!--BUTTONS-->
     <div class='btn-form'>
         <!-- DELETE BUTTON -->
-        <a href="{!! URL::route('samples.delete',['id' => @$sample->id, '_token' => csrf_token()]) !!}"
-        class="btn btn-danger pull-right margin-left-5 delete">
-        {!! trans($plang_admin.'.buttons.delete') !!}
-        </a>
+        @if($item)
+            <a href="{!! URL::route('samples.delete',['id' => @$item->id, '_token' => csrf_token()]) !!}"
+            class="btn btn-danger pull-right margin-left-5 delete">
+                {!! trans($plang_admin.'.buttons.delete') !!}
+            </a>
+        @endif
         <!-- DELETE BUTTON -->
 
         <!-- SAVE BUTTON -->
@@ -54,7 +56,7 @@
             @include('package-category::admin.partials.input_text', [
             'name' => 'sample_name',
             'label' => trans($plang_admin.'.labels.name'),
-            'value' => @$sample->sample_name,
+            'value' => @$item->sample_name,
             'description' => trans($plang_admin.'.description.name'),
             'errors' => $errors,
             ])
@@ -65,7 +67,7 @@
             'name' => 'category_id',
             'label' => trans($plang_admin.'.labels.category'),
             'items' => $categories,
-            'value' => @$sample->sample_id_parent,
+            'value' => @$item->category_id,
             'description' => trans($plang_admin.'.description.category'),
             'errors' => $errors,
             ])
@@ -89,7 +91,7 @@
 
     <!--HIDDEN FIELDS-->
     <div class='hidden-field'>
-        {!! Form::hidden('id',@$sample->id) !!}
+        {!! Form::hidden('id',@$item->id) !!}
         {!! Form::hidden('context',$request->get('context',null)) !!}
     </div>
     <!--/HIDDEN FIELDS-->
