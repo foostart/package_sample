@@ -29,6 +29,9 @@ return [
     'sidebar' => [
         'list' => 'Items',
         'add' => 'Add new',
+        'trash' => 'Trash',
+        'config' => 'Configurations',
+        'lang' => 'Languages',
     ],
 
 
@@ -46,6 +49,8 @@ return [
         'order' => '#',
         'name' => 'Sample name',
         'operations' => 'Operations',
+        'updated_at' => 'Updated at',
+        'filename' => 'File name',
     ],
 
 
@@ -62,6 +67,8 @@ return [
         'title-edit' => 'Edit sample',
         'title-add' => 'Add new sample',
         'title-delete' => 'Delete sample',
+        'title-config' => 'Current configurations',
+        'title-lang' => 'Manage languages',
     ],
 
 
@@ -99,6 +106,7 @@ return [
         'keyword' => 'Keyword',
         'sorting' => 'Sorting',
         'no-selected' => 'No selected',
+        'status' => 'Status',
     ],
 
 
@@ -120,12 +128,17 @@ return [
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit.
               </p>
             </blockquote>',
-        'not-found' => 'Not found samples',
         'category' => '<blockquote class="quote-card">
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit.
               </p>
             </blockquote>',
+        'list' => 'List of items',
+        'counters' => 'There are <b>:number</b> items',
+        'counter' => 'There is <b>:number</b> item',
+        'not-found' => 'Not found items',
+        'config' => 'List of configurations',
+        'lang' => 'List of languages',
     ],
 
 
@@ -181,6 +194,8 @@ return [
         'name' => 'Sample name',
         'category' => 'Category name',
         'title-search' => 'Search sample',
+        'title-backup' => 'Backups',
+        'config' => 'Configurations',
     ],
 
 
@@ -223,5 +238,44 @@ return [
         'form-search' => 'Search samples',
         'list' => 'List of samples',
         'search' => 'Search results',
+    ],
+
+
+
+
+
+    /*
+    |-----------------------------------------------------------------------
+    | CONFIRMS
+    |-----------------------------------------------------------------------
+    | List of messages for confirm
+    |
+    |
+    |
+    */
+    'confirms' => [
+        'delete' => 'Are you sure you want to delete this item?',
+    ],
+
+
+
+
+
+    /*
+    |-----------------------------------------------------------------------
+    | ACTIONS
+    |-----------------------------------------------------------------------
+    |
+    |
+    |
+    |
+    */
+    'actions' => [
+        'add-ok' => 'Add item successfully',
+        'add-error' => 'Add item failed',
+        'edit-ok' => 'Edit item successfully',
+        'edit-error' => 'Edit item failed',
+        'delete-ok' => 'Delete item successfully',
+        'delete-error' => 'Delete item failed',
     ],
 ];

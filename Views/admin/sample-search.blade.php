@@ -1,4 +1,3 @@
-
 <div class="panel panel-info">
     <div class="panel-heading">
         <h3 class="panel-title bariol-thin"><i class="fa fa-search"></i>
@@ -37,6 +36,7 @@
 
             <div class='hidden-field'>
                 {!! Form::hidden('context',@$request->get('context',null)) !!}
+                {!! csrf_field() !!}
             </div>
 
         {!! Form::close() !!}
