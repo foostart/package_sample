@@ -28,6 +28,8 @@ Route::group(['middleware' => ['web']], function () {
           | 2. Edit sample
           | 3. Delete sample
           | 4. Add new sample
+          | 5. Manage configurations
+          | 6. Manage languages
           |
         */
 
@@ -69,6 +71,32 @@ Route::group(['middleware' => ['web']], function () {
          Route::get('admin/samples/trash', [
             'as' => 'samples.trash',
             'uses' => 'SampleAdminController@trash'
+        ]);
+
+        /**
+         * configs
+        */
+        Route::get('admin/samples/config', [
+            'as' => 'samples.config',
+            'uses' => 'SampleAdminController@config'
+        ]);
+
+        Route::post('admin/samples/config', [
+            'as' => 'samples.config',
+            'uses' => 'SampleAdminController@config'
+        ]);
+
+        /**
+         * language
+        */
+        Route::get('admin/samples/lang', [
+            'as' => 'samples.lang',
+            'uses' => 'SampleAdminController@lang'
+        ]);
+
+        Route::post('admin/samples/lang', [
+            'as' => 'samples.lang',
+            'uses' => 'SampleAdminController@lang'
         ]);
 
     });

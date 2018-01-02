@@ -35,6 +35,9 @@ class SampleServiceProvider extends ServiceProvider {
         // publish views
         $this->publishViews();
 
+        // publish assets
+        $this->publishAssets();
+
     }
 
     /**
@@ -77,6 +80,12 @@ class SampleServiceProvider extends ServiceProvider {
 
         $this->publishes([
             __DIR__ . '/Views' => base_path('resources/views/vendor/package-sample'),
+        ]);
+    }
+
+    protected function publishAssets() {
+        $this->publishes([
+            __DIR__ . '/public' => public_path('packages/foostart/package-sample'),
         ]);
     }
 

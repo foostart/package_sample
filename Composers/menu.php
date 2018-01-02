@@ -19,6 +19,8 @@ View::composer([
                 'package-sample::admin.sample-items',
                 'package-sample::admin.sample-item',
                 'package-sample::admin.sample-search',
+                'package-sample::admin.sample-config',
+                'package-sample::admin.sample-lang',
     ], function ($view) {
 
         /**
@@ -42,6 +44,14 @@ View::composer([
             trans('sample-admin.sidebar.list') => [
                 "url" => URL::route('samples.list', []),
                 'icon' => '<i class="fa fa-list-ul" aria-hidden="true"></i>'
+            ],
+            trans('sample-admin.sidebar.config') => [
+                "url" => URL::route('samples.config', []),
+                'icon' => '<i class="fa fa-braille" aria-hidden="true"></i>'
+            ],
+            trans('sample-admin.sidebar.lang') => [
+                "url" => URL::route('samples.lang', []),
+                'icon' => '<i class="fa fa-language" aria-hidden="true"></i>'
             ],
         ]);
 

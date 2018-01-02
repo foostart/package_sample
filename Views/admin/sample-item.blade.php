@@ -1,4 +1,4 @@
-@if( ! $items->isEmpty() )
+@if(!empty($items) && (!$items->isEmpty()) )
 <?php
     $withs = [
         'order' => '5%',
@@ -139,7 +139,9 @@
     </tbody>
 
 </table>
-
+<div class="paginator">
+    {!! $items->appends($request->except(['page']) )->render() !!}
+</div>
 @else
     <!--SEARCH RESULT MESSAGE-->
     <span class="text-warning">
@@ -149,69 +151,8 @@
     </span>
     <!--/SEARCH RESULT MESSAGE-->
 @endif
-<div class="paginator">
-    {!! $items->appends($request->except(['page']) )->render() !!}
-</div>
 
 @section('footer_scripts')
     @parent
-    <script type='text/javascript'>
-        $(document).ready(function () {
-            //hide button delete
-            $('.btn-delete-all').hide();
-
-            $('#selecctall').click(function (event) {
-
-                if (this.checked) {
-                    //checked all checkbox
-                    $('.box-item input').each(function () {
-                        $(this).prop('checked', true);
-                    });
-
-                    //show button delete
-                    $('.btn-delete-all').show();
-
-                } else {
-
-                    //un-checked all checkbox
-                    $('.box-item input').each(function () {
-                        $(this).prop('checked', false);
-                    });
-
-                    //hide button delete
-                    $('.btn-delete-all').hide();
-                }
-
-            });
-
-            //counter checked
-            function counterChecked() {
-                $counter = 0;
-                $('.box-item input').each(function () {
-                    if (this.checked) {
-                        $counter++;
-                    }
-                });
-                return $counter;
-            }
-
-            $('.box-item input').each(function () {
-
-                $(this).click(function(){
-                    if (this.checked) {
-                        //show button delete
-                        $('.btn-delete-all').show();
-                    } else {
-                        $counter = counterChecked();
-                        if ($counter == 0) {
-                            $('.btn-delete-all').hide();
-                        } else {
-                            //show button delete
-                            $('.btn-delete-all').show();
-                        }
-                    }
-                });
-            });
-        });
-    </script>
+    {!! HTML::script('packages/foostart/package-sample/js/form-table.js')  !!}
 @stop
