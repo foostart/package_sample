@@ -89,20 +89,4 @@ class SampleServiceProvider extends ServiceProvider {
         ]);
     }
 
-    /**
-     * Generate context key
-     */
-    private function generateContextKey(){
-        $numbers_context = 10;
-        $index = 0;
-        $context_keys = [];
-        do {
-            $index++;
-            $context_keys[] = $index.substr(md5(time().rand(1,99999)),0,11);
-
-        } while ($index < $numbers_context);
-
-        return $context_keys;
-    }
-
 }

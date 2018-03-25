@@ -50,6 +50,14 @@ Route::group(['middleware' => ['web']], function () {
         ]);
 
         /**
+         * copy
+         */
+        Route::get('admin/samples/copy', [
+            'as' => 'samples.copy',
+            'uses' => 'SampleAdminController@copy'
+        ]);
+
+        /**
          * post
          */
         Route::post('admin/samples/edit', [

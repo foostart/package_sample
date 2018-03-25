@@ -57,7 +57,7 @@
             'name' => 'sample_name',
             'label' => trans($plang_admin.'.labels.name'),
             'value' => @$item->sample_name,
-            'description' => trans($plang_admin.'.description.name'),
+            'description' => trans($plang_admin.'.descriptions.name'),
             'errors' => $errors,
             ])
             <!--/SAMPLE NAME-->
@@ -67,8 +67,10 @@
             'name' => 'category_id',
             'label' => trans($plang_admin.'.labels.category'),
             'items' => $categories,
-            'value' => @$item->category_id,
-            'description' => trans($plang_admin.'.description.category'),
+            'value' => @$itemds->category_id,
+            'description' => trans($plang_admin.'.descriptions.category', [
+                                'href' => URL::route('categories.list', ['_key' => $context->context_key])
+                                ]),
             'errors' => $errors,
             ])
             <!-- /LIST OF CATEGORIES -->
