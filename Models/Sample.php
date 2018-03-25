@@ -273,7 +273,9 @@ class Sample extends FooModel {
 
         $item = self::create($dataFields);
 
-        $item->id = $item->sample_id;
+        $key = $this->primaryKey;
+        $item->id = $item->$key;
+
         return $item;
     }
 

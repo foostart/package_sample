@@ -14,9 +14,9 @@
 ?>
 <caption>
     @if($nav['total'] == 1)
-        {!! trans($plang_admin.'.description.counter', ['number' => $nav['total']]) !!}
+        {!! trans($plang_admin.'.descriptions.counter', ['number' => $nav['total']]) !!}
     @else
-        {!! trans($plang_admin.'.description.counters', ['number' => $nav['total']]) !!}
+        {!! trans($plang_admin.'.descriptions.counters', ['number' => $nav['total']]) !!}
     @endif
 </caption>
 
@@ -97,30 +97,29 @@
                 <!--OPERATOR-->
                 <td>
                     <!--edit-->
-                    <a href="{!! URL::route('samples.edit', ['id' => $item->sample_id,
+                    <a href="{!! URL::route('samples.edit', [   'id' => $item->id,
                                                                 '_token' => csrf_token()
-                                                               ])
+                                                            ])
                             !!}">
                         <i class="fa fa-edit f-tb-icon"></i>
                     </a>
 
-                    <!--delete-->
-                    <a href="{!! URL::route('samples.delete',['id' => $item->sample_id,
+                    <!--copy-->
+                    <a href="{!! URL::route('samples.copy',[    'cid' => $item->id,
                                                                 '_token' => csrf_token(),
-                                                                 ])
+                                                            ])
+                             !!}"
+                        class="margin-left-5">
+                        <i class="fa fa-files-o f-tb-icon" aria-hidden="true"></i>
+                    </a>
+
+                    <!--delete-->
+                    <a href="{!! URL::route('samples.delete',[  'id' => $item->id,
+                                                                '_token' => csrf_token(),
+                                                              ])
                              !!}"
                        class="margin-left-5 delete">
                         <i class="fa fa-trash-o f-tb-icon"></i>
-                    </a>
-
-                    <!--copy-->
-                    <a href="{!! URL::route('samples.edit',['id' => $item->sample_id,
-                                                            'cid' => $item->sample_id,
-                                                            '_token' => csrf_token(),
-                                                            ])
-                             !!}"
-                        class="margin-left-5 delete">
-                        <i class="fa fa-files-o f-tb-icon" aria-hidden="true"></i>
                     </a>
 
                 </td>
@@ -146,7 +145,7 @@
     <!--SEARCH RESULT MESSAGE-->
     <span class="text-warning">
         <h5>
-            {{ trans($plang_admin.'.description.not-found') }}
+            {{ trans($plang_admin.'.descriptions.not-found') }}
         </h5>
     </span>
     <!--/SEARCH RESULT MESSAGE-->
