@@ -78,14 +78,51 @@
 
         <!--MENU 2-->
         <div id="menu_2" class="tab-pane fade">
-            <h3>Menu 1</h3>
-            <p>Some content in menu 1.</p>
+            <!--SAMPLE OVERVIEW-->
+            @include('package-category::admin.partials.textarea', [
+            'name' => 'sample_overview',
+            'label' => trans($plang_admin.'.labels.overview'),
+            'value' => @$item->sample_overview,
+            'description' => trans($plang_admin.'.descriptions.overview'),
+            'tinymce' => false,
+            'errors' => $errors,
+            ])
+            <!--/SAMPLE OVERVIEW-->
+
+            <!--SAMPLE DESCRIPTION-->
+            @include('package-category::admin.partials.textarea', [
+            'name' => 'sample_description',
+            'label' => trans($plang_admin.'.labels.description'),
+            'value' => @$item->sample_description,
+            'description' => trans($plang_admin.'.descriptions.description'),
+            'rows' => 50,
+            'tinymce' => true,
+            'errors' => $errors,
+            ])
+            <!--/SAMPLE DESCRIPTION-->
         </div>
 
         <!--MENU 3-->
         <div id="menu_3" class="tab-pane fade">
-            <h3>Menu 2</h3>
-            <p>Some content in menu 2.</p>
+            <!--SAMPLE IMAGE-->
+            @include('package-category::admin.partials.input_image', [
+            'name' => 'sample_image',
+            'label' => trans($plang_admin.'.labels.image'),
+            'value' => @$item->sample_image,
+            'description' => trans($plang_admin.'.descriptions.image'),
+            'errors' => $errors,
+            ])
+            <!--/SAMPLE IMAGE-->
+
+            <!--SAMPLE FILES-->
+            @include('package-category::admin.partials.input_files', [
+                'name' => 'files',
+                'label' => trans($plang_admin.'.labels.files'),
+                'value' => @$item->sample_files,
+                'description' => trans($plang_admin.'.descriptions.files'),
+                'errors' => $errors,
+            ])
+            <!--/SAMPLE FILES-->
         </div>
 
     </div>

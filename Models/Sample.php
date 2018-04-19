@@ -29,6 +29,10 @@ class Sample extends FooModel {
             'user_id',
             'user_full_name',
             'user_email',
+            'sample_overview',
+            'sample_description',
+            'sample_image',
+            'sample_files',
             'sample_status',
         ];
 
@@ -53,7 +57,23 @@ class Sample extends FooModel {
             'user_email' => [
                 'name' => 'email',
                 'type' => 'Text',
-            ]
+            ],
+            'sample_overview' => [
+                'name' => 'sample_overview',
+                'type' => 'Text',
+            ],
+            'sample_description' => [
+                'name' => 'sample_description',
+                'type' => 'Text',
+            ],
+            'sample_image' => [
+                'name' => 'sample_image',
+                'type' => 'Text',
+            ],
+            'sample_files' => [
+                'name' => 'files',
+                'type' => 'Json',
+            ],
         ];
 
         //check valid fields for inserting
@@ -63,6 +83,10 @@ class Sample extends FooModel {
             'category_id',
             'user_full_name',
             'updated_at',
+            'sample_overview',
+            'sample_description',
+            'sample_image',
+            'sample_files',
             'sample_status',
         ];
 

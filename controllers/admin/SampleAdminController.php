@@ -60,7 +60,7 @@ class SampleAdminController extends FooController {
         $this->data_view['status'] = $this->obj_item->getPluckStatus();
 
         // //set category
-        $this->category_ref_name = 'admin/samples/list_name';
+        $this->category_ref_name = 'admin/samples';
 
     }
 
@@ -93,9 +93,10 @@ class SampleAdminController extends FooController {
      */
     public function edit(Request $request) {
 
-        $params = $request->all();
-
         $item = NULL;
+        $categories = NULL;
+
+        $params = $request->all();
         $params['id'] = $request->get('id', NULL);
 
         $context = $this->obj_item->getContext($this->category_ref_name);
@@ -110,7 +111,12 @@ class SampleAdminController extends FooController {
             }
         }
 
-        $categories = $this->obj_category->pluckSelect($params);
+        //get categories by context
+        $context = $this->obj_item->getContext($this->category_ref_name);
+        if ($context) {
+            $params['context_id'] = $context->context_id;
+            $categories = $this->obj_category->pluckSelect($params);
+        }
 
         // display view
         $this->data_view = array_merge($this->data_view, array(

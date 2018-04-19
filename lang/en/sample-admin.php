@@ -32,6 +32,7 @@ return [
         'trash' => 'Trash',
         'config' => 'Configurations',
         'lang' => 'Languages',
+        'category' => 'Categories',
     ],
 
 
@@ -68,7 +69,7 @@ return [
         'title-add' => 'Add new sample',
         'title-delete' => 'Delete sample',
         'title-config' => 'Current configurations',
-        'title-lang' => 'Manage languages',
+        'title-lang' => 'Manage list of languages',
     ],
 
 
@@ -120,19 +121,15 @@ return [
     | Description
     |
     */
-    'description' => [
+    'descriptions' => [
         'form' => 'Sample form',
         'update' => 'Update sample',
-        'name' => '<blockquote class="quote-card">
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              </p>
-            </blockquote>',
-        'category' => '<blockquote class="quote-card">
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              </p>
-            </blockquote>',
+        'name' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
+        'category' => 'Click <a href=":href">here</a> to manage list of categories by token.',
+        'overview' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
+        'description' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
+        'image' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
+        'files' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
         'list' => 'List of items',
         'counters' => 'There are <b>:number</b> items',
         'counter' => 'There is <b>:number</b> item',
@@ -154,7 +151,8 @@ return [
     */
     'errors' => [
         'required' => ':attribute is required',
-        'required_length' => 'Allow from: <b>:minlength</b> to <b>:maxlength</b>. characters',
+        'required_length' => '<b> :attribute </b> allows from: <b>:minlength</b> to <b>:maxlength</b> characters.',
+        'required_min_length' =>'<b> :attribute </b> allows from: <b>:minlength</b> characters.',
     ],
 
 
@@ -172,8 +170,8 @@ return [
     'fields' => [
         'id' => 'Sample ID',
         'name' => 'Sample name',
-        'description' => 'Description',
-        'overview' => 'Overview',
+        'description' => 'Sample Description',
+        'overview' => 'Sample Overview',
         'slug' => 'Slug',
         'updated_at' => 'Updated at'
     ],
@@ -192,6 +190,10 @@ return [
     */
     'labels' => [
         'name' => 'Sample name',
+        'overview' => 'Sample overview',
+        'description' => 'Sample description',
+        'image' => 'Sample image',
+        'files' => 'Sample files',
         'category' => 'Category name',
         'title-search' => 'Search sample',
         'title-backup' => 'Backups',
@@ -215,10 +217,17 @@ return [
         'menu_1' => 'Basic',
         'menu_2' => 'Advance',
         'menu_3' => 'Other',
-        'menu_4' => 'Other',
-        'menu_5' => 'Other',
-        'menu_6' => 'Other',
-        'menu_7' => 'Other',
+        'menu_4' => 'Menu 4',
+        'menu_5' => 'Menu 5',
+        'menu_6' => 'Menu 6',
+        'menu_7' => 'Menu 7',
+        'menu_8' => 'Menu 8',
+        'menu_9' => 'Menu 9',
+        'menu_9' => 'Menu 9',
+        'guide'  => 'Guide',
+        'other'  => 'Other',
+        'basic'  => 'Basic',
+        'advance' => 'Advance',
     ],
 
 
