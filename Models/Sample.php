@@ -1,9 +1,9 @@
-<?php namespace Foostart\Sample\Models;
+<?php namespace Foostart\Contact\Models;
 
 use Foostart\Category\Library\Models\FooModel;
 use Illuminate\Database\Eloquent\Model;
 
-class Sample extends FooModel {
+class Contact extends FooModel {
 
     /**
      * @table categories
@@ -20,79 +20,55 @@ class Sample extends FooModel {
     public function setConfigs() {
 
         //table name
-        $this->table = 'samples';
+        $this->table = 'contacts';
 
         //list of field in table
-        $this->fillable = [
-            'sample_name',
-            'category_id',
-            'user_id',
-            'user_full_name',
-            'user_email',
-            'sample_overview',
-            'sample_description',
-            'sample_image',
-            'sample_files',
-            'sample_status',
-        ];
+        $this->fillable = array_merge($this->fillable, [
+            'contact_name',
+            'contact_email',
+            'contact_phone',
+            'contact_title',
+            'contact_description',
+
+        ]);
 
         //list of fields for inserting
-        $this->fields = [
-            'sample_name' => [
-                'name' => 'sample_name',
+        $this->fields = array_merge($this->fields, [
+            'contact_name' => [
+                'name' => 'contact_name',
                 'type' => 'Text',
             ],
-            'category_id' => [
-                'name' => 'category_id',
-                'type' => 'Int',
-            ],
-            'user_id' => [
-                'name' => 'user_id',
-                'type' => 'Int',
-            ],
-            'user_full_name' => [
-                'name' => 'user_full_name',
+             'contact_email' => [
+                'name' => 'contact_email',
                 'type' => 'Text',
             ],
-            'user_email' => [
-                'name' => 'email',
+            'contact_phone' => [
+                'name' => 'contact_phone',
                 'type' => 'Text',
             ],
-            'sample_overview' => [
-                'name' => 'sample_overview',
+            'contact_description' => [
+                'name' => 'contact_description',
                 'type' => 'Text',
             ],
-            'sample_description' => [
-                'name' => 'sample_description',
+            'contact_title' => [
+                'name' => 'contact_title',
                 'type' => 'Text',
             ],
-            'sample_image' => [
-                'name' => 'sample_image',
-                'type' => 'Text',
-            ],
-            'sample_files' => [
-                'name' => 'files',
-                'type' => 'Json',
-            ],
-        ];
-
+        ]);
+        
         //check valid fields for inserting
-        $this->valid_insert_fields = [
-            'sample_name',
-            'user_id',
-            'category_id',
-            'user_full_name',
-            'updated_at',
-            'sample_overview',
-            'sample_description',
-            'sample_image',
-            'sample_files',
-            'sample_status',
-        ];
+        $this->valid_insert_fields = array_merge($this->valid_insert_fields, [            
+            'contact_title',
+            'contact_email',
+            'contact_phone',
+            'contact_name',
+            'contact_description',
+        ]);
 
         //check valid fields for ordering
         $this->valid_ordering_fields = [
-            'sample_name',
+            'contact_id',
+            'contact_name',
             'updated_at',
             $this->field_status,
         ];
@@ -103,13 +79,7 @@ class Sample extends FooModel {
         ];
 
         //primary key
-        $this->primaryKey = 'sample_id';
-
-        //the number of items on page
-        $this->perPage = 10;
-
-        //item status
-        $this->field_status = 'sample_status';
+        $this->primaryKey = 'contact_id';
 
     }
 
@@ -139,9 +109,9 @@ class Sample extends FooModel {
     }
 
     /**
-     * Get a sample by {id}
+     * Get a contact by {id}
      * @param ARRAY $params list of parameters
-     * @return OBJECT sample
+     * @return OBJECT contact
      */
     public function selectItem($params = array(), $key = NULL) {
 
@@ -192,9 +162,24 @@ class Sample extends FooModel {
                 {
                     switch($column)
                     {
-                        case 'sample_name':
+                        case 'contact_name':
                             if (!empty($value)) {
-                                $elo = $elo->where($this->table . '.sample_name', '=', $value);
+                                $elo = $elo->where($this->table . '.contact_name', '=', $value);
+                            }
+                            break;
+                        case 'contact_title':
+                            if (!empty($value)) {
+                                $elo = $elo->where($this->table . '.contact_title', '=', $value);
+                            }
+                            break;
+                        case 'contact_phone':
+                            if (!empty($value)) {
+                                $elo = $elo->where($this->table . '.contact_phone', '=', $value);
+                            }
+                            break;
+                        case 'contact_email':
+                            if (!empty($value)) {
+                                $elo = $elo->where($this->table . '.contact_email', '=', $value);
                             }
                             break;
                         case 'status':
@@ -202,12 +187,12 @@ class Sample extends FooModel {
                                 $elo = $elo->where($this->table . '.'.$this->field_status, '=', $value);
                             }
                             break;
+                        
                         case 'keyword':
                             if (!empty($value)) {
                                 $elo = $elo->where(function($elo) use ($value) {
-                                    $elo->where($this->table . '.sample_name', 'LIKE', "%{$value}%")
-                                    ->orWhere($this->table . '.sample_description','LIKE', "%{$value}%")
-                                    ->orWhere($this->table . '.sample_overview','LIKE', "%{$value}%");
+                                    $elo->where($this->table . '.contact_name', 'LIKE', "%{$value}%")
+                                    ->orWhere($this->table . '.contact_description','LIKE', "%{$value}%");
                                 });
                             }
                             break;
@@ -216,11 +201,7 @@ class Sample extends FooModel {
                     }
                 }
             }
-        } elseif ($by_status) {
-
-            $elo = $elo->where($this->table . '.'.$this->field_status, '=', $this->status['publish']);
-
-        }
+        } 
 
         return $elo;
     }
@@ -233,7 +214,7 @@ class Sample extends FooModel {
     public function createSelect($elo) {
 
         $elo = $elo->select($this->table . '.*',
-                            $this->table . '.sample_id as id'
+                            $this->table . '.contact_id as id'
                 );
 
         return $elo;
@@ -261,22 +242,22 @@ class Sample extends FooModel {
         if (empty($id)) {
             $id = $params['id'];
         }
-        $field_status = $this->field_status;
 
-        $sample = $this->selectItem($params);
+        $item = $this->find($id);
 
-        if (!empty($sample)) {
+        if (!empty($item)) {
             $dataFields = $this->getDataFields($params, $this->fields);
-
+            
             foreach ($dataFields as $key => $value) {
-                $sample->$key = $value;
+                $item->$key = $value;
             }
 
-            $sample->$field_status = $this->status['publish'];
+            $item->save();
+              //add new attribute
+            $item->id = $item->contact_id;
 
-            $sample->save();
 
-            return $sample;
+            return $item;
         } else {
             return NULL;
         }
@@ -286,14 +267,11 @@ class Sample extends FooModel {
     /**
      *
      * @param ARRAY $params list of parameters
-     * @return OBJECT sample
+     * @return OBJECT contact
      */
     public function insertItem($params = []) {
 
         $dataFields = $this->getDataFields($params, $this->fields);
-
-        $dataFields[$this->field_status] = $this->status['publish'];
-
 
         $item = self::create($dataFields);
 
@@ -328,4 +306,35 @@ class Sample extends FooModel {
         return FALSE;
     }
 
+
+    /**
+     * Get list of statuses to push to select
+     * @return ARRAY list of statuses
+     */
+    public function getPluckStatus() {
+        $pluck_status = config('package-contact.status.list');
+        return $pluck_status;
+     }
+
+    /**
+     *
+     * @param ARRAY $params list of parameters
+     * @return OBJECT contact
+     */
+    public function insertSample($params = []) {
+
+        $dataFields = $this->getDataFields($params, $this->fields);
+
+        $contact = new Contact;
+        $contact->fill($params);
+        $contact->save();
+
+
+        // $item = self::create($dataFields);
+
+        // $key = $this->primaryKey;
+        // $item->id = $item->$key;
+
+        return $contact;
+    }
 }

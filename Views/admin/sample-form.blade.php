@@ -1,14 +1,14 @@
 <!------------------------------------------------------------------------------
-| List of elements in sample form
+| List of elements in contact form
 |------------------------------------------------------------------------------->
 
-{!! Form::open(['route'=>['samples.post', 'id' => @$item->id],  'files'=>true, 'method' => 'post'])  !!}
+{!! Form::open(['route'=>['contacts.post', 'id' => @$item->id],  'files'=>true, 'method' => 'post'])  !!}
 
     <!--BUTTONS-->
     <div class='btn-form'>
         <!-- DELETE BUTTON -->
         @if($item)
-            <a href="{!! URL::route('samples.delete',['id' => @$item->id, '_token' => csrf_token()]) !!}"
+            <a href="{!! URL::route('contacts.delete',['id' => @$item->id, '_token' => csrf_token()]) !!}"
             class="btn btn-danger pull-right margin-left-5 delete">
                 {!! trans($plang_admin.'.buttons.delete') !!}
             </a>
@@ -26,21 +26,7 @@
         <!--MENU 1-->
         <li class="active">
             <a data-toggle="tab" href="#menu_1">
-                {!! trans($plang_admin.'.tabs.menu_1') !!}
-            </a>
-        </li>
-
-        <!--MENU 2-->
-        <li>
-            <a data-toggle="tab" href="#menu_2">
-                {!! trans($plang_admin.'.tabs.menu_2') !!}
-            </a>
-        </li>
-
-        <!--MENU 3-->
-        <li>
-            <a data-toggle="tab" href="#menu_3">
-                {!! trans($plang_admin.'.tabs.menu_3') !!}
+                {!! trans($plang_admin.'.tabs.menu-1') !!}
             </a>
         </li>
     </ul>
@@ -52,77 +38,74 @@
         <!--MENU 1-->
         <div id="menu_1" class="tab-pane fade in active">
 
-            <!--SAMPLE NAME-->
+            <!--TITLE-->
             @include('package-category::admin.partials.input_text', [
-            'name' => 'sample_name',
-            'label' => trans($plang_admin.'.labels.name'),
-            'value' => @$item->sample_name,
-            'description' => trans($plang_admin.'.descriptions.name'),
-            'errors' => $errors,
-            ])
-            <!--/SAMPLE NAME-->
-
-            <!-- LIST OF CATEGORIES -->
-            @include('package-category::admin.partials.select_single', [
-            'name' => 'category_id',
-            'label' => trans($plang_admin.'.labels.category'),
-            'items' => $categories,
-            'value' => @$itemds->category_id,
-            'description' => trans($plang_admin.'.descriptions.category', [
-                                'href' => URL::route('categories.list', ['_key' => $context->context_key])
-                                ]),
-            'errors' => $errors,
-            ])
-            <!-- /LIST OF CATEGORIES -->
-        </div>
-
-        <!--MENU 2-->
-        <div id="menu_2" class="tab-pane fade">
-            <!--SAMPLE OVERVIEW-->
-            @include('package-category::admin.partials.textarea', [
-            'name' => 'sample_overview',
-            'label' => trans($plang_admin.'.labels.overview'),
-            'value' => @$item->sample_overview,
-            'description' => trans($plang_admin.'.descriptions.overview'),
-            'tinymce' => false,
-            'errors' => $errors,
-            ])
-            <!--/SAMPLE OVERVIEW-->
-
-            <!--SAMPLE DESCRIPTION-->
-            @include('package-category::admin.partials.textarea', [
-            'name' => 'sample_description',
-            'label' => trans($plang_admin.'.labels.description'),
-            'value' => @$item->sample_description,
-            'description' => trans($plang_admin.'.descriptions.description'),
-            'rows' => 50,
-            'tinymce' => true,
-            'errors' => $errors,
-            ])
-            <!--/SAMPLE DESCRIPTION-->
-        </div>
-
-        <!--MENU 3-->
-        <div id="menu_3" class="tab-pane fade">
-            <!--SAMPLE IMAGE-->
-            @include('package-category::admin.partials.input_image', [
-            'name' => 'sample_image',
-            'label' => trans($plang_admin.'.labels.image'),
-            'value' => @$item->sample_image,
-            'description' => trans($plang_admin.'.descriptions.image'),
-            'errors' => $errors,
-            ])
-            <!--/SAMPLE IMAGE-->
-
-            <!--SAMPLE FILES-->
-            @include('package-category::admin.partials.input_files', [
-                'name' => 'files',
-                'label' => trans($plang_admin.'.labels.files'),
-                'value' => @$item->sample_files,
-                'description' => trans($plang_admin.'.descriptions.files'),
+                'name' => 'contact_title',
+                'label' => trans($plang_admin.'.labels.title'),
+                'value' => @$item->contact_title,
+                'description' => trans($plang_admin.'.descriptions.title'),
                 'errors' => $errors,
             ])
-            <!--/SAMPLE FILES-->
+            <!--/TITLE-->
+            <div class="row">
+                <div class='col-md-6'>
+                    <!--NAME-->
+                    @include('package-category::admin.partials.input_text', [
+                        'name' => 'contact_name',
+                        'label' => trans($plang_admin.'.labels.name'),
+                        'value' => @$item->contact_name,
+                        'description' => trans($plang_admin.'.descriptions.name'),
+                        'errors' => $errors,
+                    ])
+                    <!-- /NAME-->
+                </div>
+                
+                <div class='col-md-6'>
+                    <!--EMAIL-->
+                    @include('package-category::admin.partials.input_text', [
+                        'name' => 'contact_email',
+                        'label' => trans($plang_admin.'.labels.email'),
+                        'value' => @$item->contact_email,
+                        'description' => trans($plang_admin.'.descriptions.email'),
+                        'errors' => $errors,
+                    ])
+                    <!-- /EMAIL-->
+                </div>
+                
+                <div class='col-md-6'>
+                    <!--PHONE-->
+                    @include('package-category::admin.partials.input_text', [
+                        'name' => 'contact_phone',
+                        'label' => trans($plang_admin.'.labels.phone'),
+                        'value' => @$item->contact_phone,
+                        'description' => trans($plang_admin.'.descriptions.contact-phone'),
+                    ])
+                </div>
+                
+                <div class="col-md-6">
+                    <!--STATUS-->
+                    @include('package-category::admin.partials.select_single', [
+                        'name' => 'status',
+                        'label' => trans($plang_admin.'.form.status'),
+                        'value' => @$item->status,
+                        'items' => $status,
+                        'description' => trans($plang_admin.'.descriptions.status'),
+                    ])
+                    <!--/STATUS-->
+                </div>
+            </div>
+            
+             <!--DESCRIPTION-->
+            @include('package-category::admin.partials.textarea', [
+                'name' => 'contact_description',
+                'label' => trans($plang_admin.'.labels.description'),
+                'value' => @$item->contact_description,
+                'description' => trans($plang_admin.'.descriptions.description'),
+                'rows' => 25,
+                'tinymce' => true,
+                'errors' => $errors,
+            ])
+            <!--/DESCRIPTION-->
         </div>
 
     </div>
@@ -137,5 +120,5 @@
 
 {!! Form::close() !!}
 <!------------------------------------------------------------------------------
-| End list of elements in sample form
+| End list of elements in contact form
 |------------------------------------------------------------------------------>

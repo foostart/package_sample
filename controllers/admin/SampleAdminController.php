@@ -1,8 +1,8 @@
-<?php namespace Foostart\Sample\Controllers\Admin;
+<?php namespace Foostart\Contact\Controllers\Admin;
 
 /*
 |-----------------------------------------------------------------------
-| SampleAdminController
+| ContactAdminController
 |-----------------------------------------------------------------------
 | @author: Kang
 | @website: http://foostart.com
@@ -16,36 +16,42 @@ use URL, Route, Redirect;
 use Illuminate\Support\Facades\App;
 
 use Foostart\Category\Library\Controllers\FooController;
-use Foostart\Sample\Models\Sample;
+use Foostart\Contact\Models\Contact;
 use Foostart\Category\Models\Category;
-use Foostart\Sample\Validators\SampleValidator;
+use Foostart\Contact\Validators\ContactValidator;
+use Illuminate\Support\Facades\DB;
+use Foostart\Contact\Validators\SampleValidator;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Mail\Mailable;
 
-
-class SampleAdminController extends FooController {
+class ContactAdminController extends FooController {
 
     public $obj_item = NULL;
     public $obj_category = NULL;
 
+    public $statuses = NULL;
+    public $obj_sample = NULL;
     public function __construct() {
 
         parent::__construct();
         // models
-        $this->obj_item = new Sample(array('perPage' => 10));
+        $this->obj_item = new Contact(array('perPage' => 10));
         $this->obj_category = new Category();
 
         // validators
-        $this->obj_validator = new SampleValidator();
-
+        $this->obj_validator = new ContactValidator();
+        //$this->obj_validator_sample = new SampleValidator();
         // set language files
-        $this->plang_admin = 'sample-admin';
-        $this->plang_front = 'sample-front';
+        $this->plang_admin = 'contact-admin';
+        $this->plang_front = 'contact-front';
 
         // package name
-        $this->package_name = 'package-sample';
-        $this->package_base_name = 'sample';
+        $this->package_name = 'package-contact';
+        $this->package_base_name = 'contact';
 
         // root routers
-        $this->root_router = 'samples';
+        $this->root_router = 'contacts';
 
         // page views
         $this->page_views = [
@@ -54,13 +60,19 @@ class SampleAdminController extends FooController {
                 'edit'  => $this->package_name.'::admin.'.$this->package_base_name.'-edit',
                 'config'  => $this->package_name.'::admin.'.$this->package_base_name.'-config',
                 'lang'  => $this->package_name.'::admin.'.$this->package_base_name.'-lang',
+                'sample'  => $this->package_name.'::admin.'.$this->package_base_name.'-sample',
+                'mail'  => $this->package_name.'::admin.'.$this->package_base_name.'-mail',
             ]
         ];
 
         $this->data_view['status'] = $this->obj_item->getPluckStatus();
 
+        $this->statuses = config('package-contact.status.list');
+        $this->obj_sample = config('package-contact.sample.list');
+
+
         // //set category
-        $this->category_ref_name = 'admin/samples';
+        $this->category_ref_name = 'admin/contacts';
 
     }
 
@@ -80,6 +92,7 @@ class SampleAdminController extends FooController {
             'items' => $items,
             'request' => $request,
             'params' => $params,
+            'config_status' => $this->obj_item->config_status
         ));
 
         return view($this->page_views['admin']['items'], $this->data_view);
@@ -240,10 +253,15 @@ class SampleAdminController extends FooController {
     public function config(Request $request) {
         $is_valid_request = $this->isValidRequest($request);
         // display view
-        $config_path = realpath(base_path('config/package-sample.php'));
-        $package_path = realpath(base_path('vendor/foostart/package-sample'));
+        $config_path = realpath(base_path('config/package-contact.php'));
+        $package_path = realpath(base_path('vendor/foostart/package-contact'));
 
-        $config_bakup = realpath($package_path.'/storage/backup/config');
+        $config_bakup = $package_path.'/storage/backup/config';
+        if (!file_exists($config_bakup)) {
+            mkdir($config_bakup, 0755    , true);
+        }
+        $config_bakup = realpath($config_bakup);
+
 
         if ($version = $request->get('v')) {
             //load backup config
@@ -256,7 +274,7 @@ class SampleAdminController extends FooController {
         if ($request->isMethod('post') && $is_valid_request) {
 
             //create backup of current config
-            file_put_contents($config_bakup.'/package-sample-'.date('YmdHis',time()).'.php', $content);
+            file_put_contents($config_bakup.'/package-contact-'.date('YmdHis',time()).'.php', $content);
 
             //update new config
             $content = $request->get('content');
@@ -284,16 +302,21 @@ class SampleAdminController extends FooController {
     public function lang(Request $request) {
         $is_valid_request = $this->isValidRequest($request);
         // display view
-        $langs = config('package-sample.langs');
+        $langs = config('package-contact.langs');
         $lang_paths = [];
+        $package_path = realpath(base_path('vendor/foostart/package-contact'));
 
         if (!empty($langs) && is_array($langs)) {
             foreach ($langs as $key => $value) {
-                $lang_paths[$key] = realpath(base_path('resources/lang/'.$key.'/sample-admin.php'));
+                $lang_paths[$key] = realpath(base_path('resources/lang/'.$key.'/contact-admin.php'));
+
+                $key_backup = $package_path.'/storage/backup/lang/'.$key;
+
+                if (!file_exists($key_backup)) {
+                    mkdir($key_backup, 0755    , true);
+                }
             }
         }
-
-        $package_path = realpath(base_path('vendor/foostart/package-sample'));
 
         $lang_bakup = realpath($package_path.'/storage/backup/lang');
         $lang = $request->get('lang')?$request->get('lang'):'en';
@@ -322,8 +345,8 @@ class SampleAdminController extends FooController {
             foreach ($lang_paths as $key => $value) {
                 $content = file_get_contents($value);
 
-                //format file name sample-admin-YmdHis.php
-                file_put_contents($lang_bakup.'/'.$key.'/sample-admin-'.date('YmdHis',time()).'.php', $content);
+                //format file name contact-admin-YmdHis.php
+                file_put_contents($lang_bakup.'/'.$key.'/contact-admin-'.date('YmdHis',time()).'.php', $content);
             }
 
 
@@ -392,5 +415,52 @@ class SampleAdminController extends FooController {
         return view($this->page_views['admin']['edit'], $this->data_view);
     }
 
+    /**
+     * Search user by name
+     * @return view edit page
+     * @date 23/04/2018
+     */
+    public function search(Request $request){
+        if($request->ajax())
+        {
+            $output = '';
+            $query = $request->get('query');
+            if($query != '')
+            {
+            $data = DB::table('user_profile')
+                ->where('last_name', 'like', '%'.$query.'%')
+                ->orWhere('first_name', 'like', '%'.$query.'%')
+                ->get();
+            }
+            $total_row = $data->count();
+            if($total_row > 0)
+            {
+                foreach($data as $row)
+                {
+                    $output .= '
+                    <tr>
+                    <td>'.$row->id.'</td>
+                    <td>'.$row->first_name.'</td>
+                    <td>'.$row->last_name.'</td>
+                    </tr>
+                    ';
+                }
+            }else
+            {
+                $output = '
+                <tr>
+                    <td align="center" colspan="5">No Data Found</td>
+                </tr>
+                ';
+            }
+            $data = array(
+                'table_data'  => $output,
+                'total_data'  => $total_row
+               );
+
+            echo json_encode($data);
+
+        }
+    }
 
 }

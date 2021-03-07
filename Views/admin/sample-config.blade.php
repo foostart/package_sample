@@ -1,4 +1,4 @@
-@extends('laravel-authentication-acl::admin.layouts.base-2cols')
+@extends('package-acl::admin.layouts.base-2cols')
 
 @section('title')
     {{ trans($plang_admin.'.pages.title-config') }}
@@ -46,7 +46,7 @@
 
                     <!--BODY-->
                     <div class="panel-body">
-                        {!! Form::open(['route'=>['samples.config'], 'method' => 'post'])  !!}
+                        {!! Form::open(['route'=>['contacts.config'], 'method' => 'post'])  !!}
 
                             <div class='btn-form'>
 
@@ -69,7 +69,7 @@
 
             <!--SEARCH-->
             <div class="col-md-4">
-                @include('package-sample::admin.sample-config-backup')
+                @include('package-contact::admin.contact-config-backup')
             </div>
             <!--/SEARCH-->
 

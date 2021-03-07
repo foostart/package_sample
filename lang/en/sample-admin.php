@@ -10,7 +10,7 @@ return [
     |
     */
     'menus' => [
-        'top-menu' => 'Samples'
+        'top-menu' => 'Contacts'
     ],
 
 
@@ -33,6 +33,7 @@ return [
         'config' => 'Configurations',
         'lang' => 'Languages',
         'category' => 'Categories',
+        'sample' => 'Sample'
     ],
 
 
@@ -47,11 +48,20 @@ return [
     |
     */
     'columns' => [
-        'order' => '#',
-        'name' => 'Sample name',
+        'order' => 'Order',
+        '#' => '#',
+        'counter' => '#',
+        'id' => 'Id',
+        'name' => 'Contact name',
         'operations' => 'Operations',
         'updated_at' => 'Updated at',
         'filename' => 'File name',
+        'status'    => 'Status',
+        'user_id_assigner' => 'User ID Assigner',
+        'answer' => 'Answer',
+        'title' => 'Title',
+        'email' => 'Email',
+        'message' => 'Message',
     ],
 
 
@@ -63,11 +73,11 @@ return [
     |
     */
     'pages' => [
-        'title-list' => 'List of samples',
+        'title-list' => 'List of contacts',
         'title-list-search' => 'Search results',
-        'title-edit' => 'Edit sample',
-        'title-add' => 'Add new sample',
-        'title-delete' => 'Delete sample',
+        'title-edit' => 'Edit contact',
+        'title-add' => 'Add new contact',
+        'title-delete' => 'Delete contact',
         'title-config' => 'Current configurations',
         'title-lang' => 'Manage list of languages',
     ],
@@ -89,6 +99,9 @@ return [
         'add' => 'Add',
         'save' => 'Save',
         'delete' => 'Delete',
+        'delete-in-trash' => 'In trash',
+        'delete-forever' => 'Forever',
+        'sent' => 'Sent'
     ],
 
 
@@ -122,8 +135,8 @@ return [
     |
     */
     'descriptions' => [
-        'form' => 'Sample form',
-        'update' => 'Update sample',
+        'form' => 'Contact form',
+        'update' => 'Update contact',
         'name' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
         'category' => 'Click <a href=":href">here</a> to manage list of categories by token.',
         'overview' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
@@ -136,6 +149,12 @@ return [
         'not-found' => 'Not found items',
         'config' => 'List of configurations',
         'lang' => 'List of languages',
+        'status' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
+        'member'    => 'Search member',
+        'email'    => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
+        'message'    => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
+        'answer'    => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
+        'title'    => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.',
     ],
 
 
@@ -168,12 +187,17 @@ return [
     |
     */
     'fields' => [
-        'id' => 'Sample ID',
-        'name' => 'Sample name',
-        'description' => 'Sample Description',
-        'overview' => 'Sample Overview',
+        'id' => 'Contact ID',
+        'name' => 'Contact name',
+        'description' => 'Contact description',
+        'overview' => 'Contact overview',
         'slug' => 'Slug',
-        'updated_at' => 'Updated at'
+        'updated_at' => 'Updated at',
+        'user-id'   => 'ID',
+        'last-name' => 'Last name',
+        'first-name'    => 'First name',
+        'status' => 'Status',
+        'title' => 'Title',
     ],
 
 
@@ -189,15 +213,24 @@ return [
     |
     */
     'labels' => [
-        'name' => 'Sample name',
-        'overview' => 'Sample overview',
-        'description' => 'Sample description',
-        'image' => 'Sample image',
-        'files' => 'Sample files',
+        'name' => 'Contact name',
+        'overview' => 'Contact overview',
+        'description' => 'Contact description',
+        'image' => 'Contact image',
+        'files' => 'Contact files',
         'category' => 'Category name',
-        'title-search' => 'Search sample',
+        'title-search' => 'Search contact',
         'title-backup' => 'Backups',
         'config' => 'Configurations',
+        'contact-status'    => 'Status',
+        'assigner'        => 'Add assigner',
+        'search'        => 'Search User Data',
+        'total-data'    => 'Total Data :',
+        'email'        => 'Email',
+        'message'        => 'Message',
+        'answer'        => 'Answer',
+        'title'        => 'Title',
+        'phone' => 'Phone'
     ],
 
 
@@ -214,16 +247,16 @@ return [
     |
       */
     'tabs' => [
-        'menu_1' => 'Basic',
-        'menu_2' => 'Advance',
-        'menu_3' => 'Other',
-        'menu_4' => 'Menu 4',
-        'menu_5' => 'Menu 5',
-        'menu_6' => 'Menu 6',
-        'menu_7' => 'Menu 7',
-        'menu_8' => 'Menu 8',
-        'menu_9' => 'Menu 9',
-        'menu_9' => 'Menu 9',
+        'menu-1' => 'Basic',
+        'menu-2' => 'Advance',
+        'menu-3' => 'Other',
+        'menu-4' => 'Assigner',
+        'menu-5' => 'Answer',
+        'menu-6' => 'Menu 6',
+        'menu-7' => 'Menu 7',
+        'menu-8' => 'Menu 8',
+        'menu-9' => 'Menu 9',
+        'menu-9' => 'Menu 9',
         'guide'  => 'Guide',
         'other'  => 'Other',
         'basic'  => 'Basic',
@@ -244,8 +277,8 @@ return [
     |
     */
     'headings' => [
-        'form-search' => 'Search samples',
-        'list' => 'List of samples',
+        'form-search' => 'Search contacts',
+        'list' => 'List of contacts',
         'search' => 'Search results',
     ],
 

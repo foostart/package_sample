@@ -1,4 +1,4 @@
-@extends('laravel-authentication-acl::admin.layouts.base-2cols')
+@extends('package-acl::admin.layouts.base-2cols')
 
 @section('title')
     {{ trans($plang_admin.'.pages.title-lang') }}
@@ -47,7 +47,7 @@
 
                     <!--BODY-->
                     <div class="panel-body">
-                        {!! Form::open(['route'=>['samples.lang'], 'method' => 'post'])  !!}
+                        {!! Form::open(['route'=>['contacts.lang'], 'method' => 'post'])  !!}
 
                             <div class='btn-form'>
 
@@ -94,7 +94,7 @@
 
             <!--SEARCH-->
             <div class="col-md-4">
-                @include('package-sample::admin.sample-lang-backup')
+                @include('package-contact::admin.contact-lang-backup')
             </div>
             <!--/SEARCH-->
 

@@ -1,9 +1,9 @@
 {
     "name": "foostart/package-sample",
-    "description": "Create overview sample can intergrate other project",
+    "description": "Create overview contact can intergrate other project",
     "keywords": [
         "foostart",
-        "laravel 5 package sample"
+        "laravel 5 package contact"
     ],
     "authors": [
         {

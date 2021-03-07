@@ -1,7 +1,7 @@
 <!--
 | @TITLE
-| Update existing sample
-| Add new sample
+| Update existing contact
+| Add new contact
 |
 |-------------------------------------------------------------------------------
 | @REQUIRED
@@ -15,7 +15,7 @@
 |
 |_______________________________________________________________________________
 -->
-@extends('laravel-authentication-acl::admin.layouts.base-2cols')
+@extends('package-acl::admin.layouts.base-2cols')
 
 @section('title')
     {{ trans($plang_admin.'.pages.title-edit') }}
@@ -65,7 +65,7 @@
                     <div class="row">
                         <div class="col-md-12 col-xs-12">
 
-                            @include('package-sample::admin.sample-form')
+                            @include('package-contact::admin.contact-form')
 
                         </div>
                     </div>
@@ -74,7 +74,7 @@
         </div>
 
         <div class='col-md-4'>
-            @include('package-sample::admin.sample-search')
+            @include('package-contact::admin.contact-search')
         </div>
 
     </div>
